@@ -1,0 +1,18 @@
+# 忽略日志文件
+*.log
+
+# 忽略临时文件
+*.tmp
+
+# 忽略 Arduino 编译目录
+/build/
+/bin/
+
+# 忽略本地配置
+*.ini
+*.env
+*.json
+
+# 忽略实验数据
+/data/
+/tests/
