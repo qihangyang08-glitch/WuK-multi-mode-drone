@@ -1,204 +1,262 @@
 #include <Servo.h>
-#include <Arduino.h> 
 
-// =================== 舵机对象 ===================
+// 创建舵机对象
 Servo servo1, servo2, servo3, servo4, servo5, servo6, servo7, servo8, servo9;
 
-// =================== 输入引脚 ===================
-// （保持原有映射）
-const int pwmInput1 = 45;  // 通道10 -> 模式锁定
-const int pwmInput2 = 2;   // 通道7  -> 模式切换
-const int pwmInput3 = 3;   // 通道8  -> 电推杆手动
-const int pwmInput4 = 13;  // 通道9  -> 预留（现在不用）
+// 定义输入引脚
+const int pwmInput1 = 45;  // 信号1输入引脚 模式锁定 10通道 SWA
+const int pwmInput2 = 2;   // 信号2输入引脚 模式切换 7通道  SWD
+const int pwmInput3 = 3;   // 信号3输入引脚 推杆控制 8通道  SWE
+const int pwmInput4 = 13;  // 信号4输入引脚 起落架控制 9通道 SWC
 
-// =================== 输出引脚 ===================
-const int servoPin1 = 11; // 摇臂舵机1
-const int servoPin2 = 10; // 摇臂舵机2
-const int servoPin3 = 4;  // 电机舵机A
-const int servoPin4 = 5;  // 电机舵机B
-const int servoPin5 = 6;  // 电机舵机C
-const int servoPin6 = 7;  // 电机舵机D
-const int servoPin7 = 8;  // 推杆控制1
-const int servoPin8 = 9;  // 推杆控制2
-const int servoPin9 = 12; // 起落架舵机（替换气泵）
+// 系统状态标志
+bool Lock = 0;             // 解锁标志
+bool Mode = 1;             // 模式标志 (1=飞行模式, 0=陆/水模式)
+short pusher_ctrl = 0;     // 推杆控制状态 (0=停止, 1=伸长, 2=收缩)
 
-// =================== 状态变量 ===================
-bool Lock = 0;         // 解锁标志
-int Mode = 2;          // 默认开机地面模式 (2=GROUND)
-short Spl_agl = 0;     // 保留原有摇臂张角状态
+// 舵机输出引脚定义
+const int servoPin1 = 11;  // 电机臂舵机1
+const int servoPin2 = 10;  // 电机臂舵机2 
+const int servoPin3 = 4;   // 预留舵机3
+const int servoPin4 = 5;   // 预留舵机4
+const int servoPin5 = 6;   // 预留舵机5
+const int servoPin6 = 7;   // 预留舵机6
+const int servoPin7 = 8;   // 推杆控制舵机1
+const int servoPin8 = 9;   // 推杆控制舵机2
+const int servoPin9 = 12;  // 起落架控制舵机
 
-// =================== 参数化设置 ===================
-// （保留原始数值作为默认值）
-int pre_angle1 = 90;
-int pre_angle2 = 80;
-int delta_angle = 90;
+// 舵机角度参数
+int pre_angle1 = 90;  // 预设角度1
+int pre_angle2 = 80;  // 预设角度2
+int delta_angle = 90; // 角度变化量
 
-int servoDelay    = 50;    // 舵机转动延时 (ms)
-int pushrodTime   = 2000;  // 推杆动作时间 (ms)
-int gearWaitTime  = 2000;  // 起落架收放等待时间 (ms)
+// PWM信号范围
+const int pwmMin = 1000;  // PWM最小值
+const int pwmMax = 2000;  // PWM最大值
 
-// =================== PWM滤波 ===================
-#define FILTER_SIZE 5
-int pwmBuffer[4][FILTER_SIZE];
-int bufferIndex[4] = {0};
+// 滤波参数
+#define FILTER_SIZE 5           // 滤波窗口大小
+int pwmBuffer[4][FILTER_SIZE];  // 存储每个通道的PWM信号
+int bufferIndex[4] = {0};       // 每个通道当前索引位置
 
+// 起落架状态
+bool landing_gear_extended = false;  // 起落架状态标志
+
+void setup() {
+  // 初始化舵机连接
+  servo1.attach(servoPin1);  // 电机臂舵机1
+  servo2.attach(servoPin2);  // 电机臂舵机2
+  servo3.attach(servoPin3);  // 预留舵机
+  servo4.attach(servoPin4);  // 预留舵机
+  servo5.attach(servoPin5);  // 预留舵机
+  servo6.attach(servoPin6);  // 预留舵机
+  servo7.attach(servoPin7);  // 推杆控制1
+  servo8.attach(servoPin8);  // 推杆控制2
+  servo9.attach(servoPin9);  // 起落架控制
+  
+  // 初始化输入引脚
+  pinMode(pwmInput1, INPUT);
+  pinMode(pwmInput2, INPUT);
+  pinMode(pwmInput3, INPUT);
+  pinMode(pwmInput4, INPUT);
+  
+  // 舵机初始化到安全位置
+  servo1.write(45);           // 电机臂初始位置
+  servo2.write(130);          // 电机臂初始位置
+  servo3.write(pre_angle1);   // 预留舵机初始位置
+  servo4.write(pre_angle1);   // 预留舵机初始位置
+  servo5.write(pre_angle2);   // 预留舵机初始位置
+  servo6.write(pre_angle2);   // 预留舵机初始位置
+  servo7.writeMicroseconds(1500);  // 推杆中位
+  servo8.writeMicroseconds(1500);  // 推杆中位
+  servo9.writeMicroseconds(1500);  // 起落架中位
+  
+  // 初始化滤波缓冲区
+  for(int ch = 0; ch < 4; ch++) {
+    for(int i = 0; i < FILTER_SIZE; i++) {
+      pwmBuffer[ch][i] = 1500;  // 初始化为中位值
+    }
+  }
+  
+  // 串口初始化
+  Serial.begin(9600);
+  Serial.println("跨介质无人机变形控制系统 v2.0 启动");
+  Serial.println("CH1=模式锁定, CH2=模式切换, CH3=推杆控制, CH4=起落架控制");
+  
+  delay(1000);  // 等待系统稳定
+}
+
+// PWM信号滤波函数
 int filterSignal(int channel, int pwmValue) {
+  // 将新的PWM值存入缓冲区
   pwmBuffer[channel][bufferIndex[channel]] = pwmValue;
   bufferIndex[channel] = (bufferIndex[channel] + 1) % FILTER_SIZE;
-
-  long sum = 0;
+  
+  // 计算滤波后的平均值
+  int sum = 0;
   for (int i = 0; i < FILTER_SIZE; i++) {
     sum += pwmBuffer[channel][i];
   }
   return sum / FILTER_SIZE;
 }
 
-// =================== 初始化 ===================
-void setup() {
-  // 舵机 attach
-  servo1.attach(servoPin1);
-  servo2.attach(servoPin2);
-  servo3.attach(servoPin3);
-  servo4.attach(servoPin4);
-  servo5.attach(servoPin5);
-  servo6.attach(servoPin6);
-  servo7.attach(servoPin7);
-  servo8.attach(servoPin8);
-  servo9.attach(servoPin9);
-
-  // 输入
-  pinMode(pwmInput1, INPUT);
-  pinMode(pwmInput2, INPUT);
-  pinMode(pwmInput3, INPUT);
-  pinMode(pwmInput4, INPUT);
-
-  // 舵机初始位置（保持原有）
-  servo1.write(45);
-  servo2.write(130);
-  servo3.write(pre_angle1);
-  servo4.write(pre_angle1);
-  servo5.write(pre_angle2);
-  servo6.write(pre_angle2);
-  servo7.writeMicroseconds(1500);
-  servo8.writeMicroseconds(1500);
-  servo9.writeMicroseconds(1500);
-
-  Serial.begin(9600);
+// PWM信号范围规范化函数
+int normalizeSignal(int signal) {
+  if (signal < 1000) signal = 1000;
+  if (signal > 1900) signal = 2000;
+  return signal;
 }
 
-// =================== 辅助函数 ===================
-long readPWM(int pin, int channel) {
-  long v = pulseIn(pin, HIGH, 25000);
-  if (v < 1000) v = 1000;
-  if (v > 2000) v = 2000;
-  return filterSignal(channel, v);
-}
-
-// 推杆动作
-void pushrodExtend() {
-  servo7.writeMicroseconds(2000);
-  servo8.writeMicroseconds(2000);
-  delay(pushrodTime);
-  servo7.writeMicroseconds(1500);
-  servo8.writeMicroseconds(1500);
-}
-void pushrodRetract() {
-  servo7.writeMicroseconds(1000);
-  servo8.writeMicroseconds(1000);
-  delay(pushrodTime);
-  servo7.writeMicroseconds(1500);
-  servo8.writeMicroseconds(1500);
-}
-
-// 起落架动作
-void gearDown() {
-  servo9.writeMicroseconds(2000);
-  delay(gearWaitTime);
-}
-void gearUp() {
-  servo9.writeMicroseconds(1000);
-  delay(gearWaitTime);
-}
-
-// =================== 模式切换函数 ===================
-#define MODE_FLIGHT 0
-#define MODE_GROUND 1
-#define MODE_WATER  2
-
-void switchToMode(int target) {
-  if (target == Mode) return; // 已经在此模式
-
-  if (target == MODE_GROUND) {
-    // 飞行/水面 -> 地面
-    gearDown();
-    pushrodExtend();
-    for (int i = 0; i <= delta_angle; i++) {
-      servo3.write(i);
-      servo4.write(i);
-      servo5.write(170 - i);
-      servo6.write(170 - i);
-      delay(servoDelay);
-    }
-    pushrodRetract();
-    gearUp();
+// 模式切换到飞行模式
+void switchToFlightMode() {
+  Serial.println("切换到飞行模式...");
+  
+  // 电机臂缓慢转动到飞行位置
+  for (int i = 0; i <= 110; i++) {
+    servo1.write(155 - i);  // servo1从155度转到45度
+    servo2.write(20 + i);   // servo2从20度转到130度
+    delay(50);              // 缓慢转动，避免冲击
   }
-  else if (target == MODE_FLIGHT) {
-    // 地面/水面 -> 飞行
-    pushrodRetract();
-    gearDown();
-    pushrodExtend();
-    for (int i = 0; i <= delta_angle; i++) {
-      servo3.write(90 - i);
-      servo4.write(90 - i);
-      servo5.write(80 + i);
-      servo6.write(80 + i);
-      delay(servoDelay);
-    }
-    gearUp();
+  
+  // 预留舵机回到初始位置
+  for (int i = 0; i <= delta_angle; i++) {
+    servo3.write(i);
+    servo4.write(i);
+    servo5.write(170 - i);
+    servo6.write(170 - i);
+    delay(50);
   }
-  else if (target == MODE_WATER) {
-    // 飞行/地面 -> 水面
-    for (int i = 0; i <= delta_angle; i++) {
-      servo3.write(i);
-      servo4.write(i);
-      servo5.write(170 - i);
-      servo6.write(170 - i);
-      delay(servoDelay);
-    }
-  }
-
-  Mode = target;
-  Serial.print("Switched to mode: ");
-  Serial.println(Mode);
+  
+  Serial.println("飞行模式切换完成");
 }
 
-// =================== 主循环 ===================
-void loop() {
-  long signal1 = readPWM(pwmInput1, 0); // Lock
-  long signal2 = readPWM(pwmInput2, 1); // Mode
-  long signal3 = readPWM(pwmInput3, 2); // Pushrod
-  long signal4 = readPWM(pwmInput4, 3); // 预留
-
-  // 信号一 -> 模式锁定
-  if (signal1 > 1900) Lock = 1;
-  else if (signal1 < 1100) Lock = 0;
-
-  // 信号二 -> 模式切换
-  if (!Lock) {
-    if (signal2 > 1800) switchToMode(MODE_GROUND);
-    else if (signal2 >= 1300 && signal2 <= 1700) switchToMode(MODE_WATER);
-    else if (signal2 < 1200) switchToMode(MODE_FLIGHT);
+// 模式切换到陆地/水面模式
+void switchToLandWaterMode() {
+  Serial.println("切换到陆地/水面模式...");
+  
+  // 电机臂缓慢转动到水平位置
+  for (int i = 0; i <= 110; i++) {
+    servo1.write(45 + i);   // servo1从45度转到155度
+    servo2.write(130 - i);  // servo2从130度转到20度
+    delay(50);              // 缓慢转动，避免冲击
   }
+  
+  // 预留舵机转动到工作位置
+  for (int i = 0; i <= delta_angle; i++) {
+    servo3.write(90 - i);   // 转到0度
+    servo4.write(90 - i);   // 转到0度
+    servo5.write(80 + i);   // 转到170度
+    servo6.write(80 + i);   // 转到170度
+    delay(50);
+  }
+  
+  Serial.println("陆地/水面模式切换完成");
+}
 
-  // 信号三 -> 电推杆手动控制
-  if (signal3 < 1100) pushrodRetract();
-  else if (signal3 > 1900) pushrodExtend();
+// 起落架控制函数
+void controlLandingGear(int signal) {
+  if (signal < 1200 && landing_gear_extended) {
+    // 收起起落架
+    Serial.println("收起起落架");
+    servo9.writeMicroseconds(1000);  // 收起位置
+    landing_gear_extended = false;
+  } 
+  else if (signal > 1800 && !landing_gear_extended) {
+    // 放下起落架
+    Serial.println("放下起落架");
+    servo9.writeMicroseconds(2000);  // 放下位置
+    landing_gear_extended = true;
+  } 
+  else if (signal >= 1200 && signal <= 1800) {
+    // 中位保持当前状态
+    servo9.writeMicroseconds(1500);
+  }
+}
+
+// 推杆控制函数
+void controlPusher(int signal) {
+  if (signal < 1100) {
+    pusher_ctrl = 2;  // 推杆收缩
+    servo7.writeMicroseconds(1000);
+    servo8.writeMicroseconds(1000);
+    Serial.println("推杆收缩");
+  } 
+  else if (signal > 1900) {
+    pusher_ctrl = 1;  // 推杆伸长
+    servo7.writeMicroseconds(2000);
+    servo8.writeMicroseconds(2000);
+    Serial.println("推杆伸长");
+  } 
   else {
+    pusher_ctrl = 0;  // 推杆停止
     servo7.writeMicroseconds(1500);
     servo8.writeMicroseconds(1500);
   }
+}
 
-  // 串口调试输出
-  Serial.print("Lock: "); Serial.print(Lock);
-  Serial.print(" Mode: "); Serial.println(Mode);
+void loop() {
+  // 读取四路PWM信号
+  long signal1 = pulseIn(pwmInput1, HIGH, 25000);  // 模式锁定
+  long signal2 = pulseIn(pwmInput2, HIGH, 25000);  // 模式切换
+  long signal3 = pulseIn(pwmInput3, HIGH, 25000);  // 推杆控制
+  long signal4 = pulseIn(pwmInput4, HIGH, 25000);  // 起落架控制
+  
+  // 信号范围规范化
+  signal1 = normalizeSignal(signal1);
+  signal2 = normalizeSignal(signal2);
+  signal3 = normalizeSignal(signal3);
+  signal4 = normalizeSignal(signal4);
+  
+  // 对信号进行滤波处理
+  int filteredValue1 = filterSignal(0, signal1);  // 模式锁定信号
+  int filteredValue2 = filterSignal(1, signal2);  // 模式切换信号
+  int filteredValue3 = filterSignal(2, signal3);  // 推杆控制信号
+  int filteredValue4 = filterSignal(3, signal4);  // 起落架控制信号
+  
+  // 信号1 - 模式锁定控制
+  if (filteredValue1 > 1900) {
+    Lock = 1;  // 解锁模式切换
+  } else if (filteredValue1 < 1100) {
+    Lock = 0;  // 锁定模式切换
+  }
+  
+  // 信号2 - 模式切换控制（仅在解锁状态下有效）
+  if (Lock == 1) {
+    if (filteredValue2 > 1900 && Mode == 0) {
+      // 切换到飞行模式
+      Mode = 1;
+      switchToFlightMode();
+    } 
+    else if (filteredValue2 < 1100 && Mode == 1) {
+      // 切换到陆地/水面模式
+      Mode = 0;
+      switchToLandWaterMode();
+    }
+  }
+  
+  // 信号3 - 推杆控制（独立于模式切换）
+  controlPusher(filteredValue3);
+  
+  // 信号4 - 起落架控制（独立于模式切换）
+  controlLandingGear(filteredValue4);
+  
+  // 调试信息输出
+  Serial.print("Lock:");
+  Serial.print(Lock);
+  Serial.print(" Mode:");
+  Serial.print(Mode);
+  Serial.print(" Pusher:");
+  Serial.print(pusher_ctrl);
+  Serial.print(" LandingGear:");
+  Serial.print(landing_gear_extended);
+  Serial.print(" | PWM-> CH1:");
+  Serial.print(filteredValue1);
+  Serial.print(" CH2:");
+  Serial.print(filteredValue2);
+  Serial.print(" CH3:");
+  Serial.print(filteredValue3);
+  Serial.print(" CH4:");
+  Serial.println(filteredValue4);
+  
+  delay(20);  // 主循环延时，避免过于频繁的处理
 }
