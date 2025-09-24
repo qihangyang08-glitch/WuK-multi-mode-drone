@@ -1,4 +1,5 @@
 #include <Servo.h>
+#include <Arduino.h>
 
 //===硬件配置===
 struct HardwareConfig {
@@ -57,7 +58,7 @@ enum Controller {  //控制权归属
 struct StatusBar {                           //状态机
   bool STATE_LOCKED = true;                  //默认锁定
   bool activation = false;                   //是否处于激活态
-  SystemState system = STATE_FLIGHT_MODE;    //初始为飞行模式
+  SystemState system = STATE_SURFACE_MODE;    //初始为地面/水面模式
   Controller controller = SIGNAL_CT;         //默认遥控
   ArmState arm = ARM_STOPPED;                //默认推杆停止
   LandingGearState landingGear = GEAR_RETRACTED; //默认起落架收起
@@ -107,7 +108,7 @@ void printDebugInfo();                               //调试输出
 void setup() {
   hardwareInit();
   Serial.begin(9600);
-  Serial.println("Updated System Initialized - Two Mode Control");
+  Serial.println("System Initialized");
 }
 
 //===主循环===
@@ -122,10 +123,10 @@ void loop() {
     updateSystemState();    //更新状态
     beforetime = millis();  //更新计时
   }
-  //调试信息，200ms刷新
+  //调试信息，500ms刷新
   if (SystemStatus.debugMode) {
     static uint32_t lastDebug = 0;
-    if (millis() - lastDebug >= 200) {
+    if (millis() - lastDebug >= 500) {
       printDebugInfo();
       lastDebug = millis();
     }
@@ -141,6 +142,11 @@ void SerialRead() {
     Serial.println(received);
     executeCommand(received);  //更新状态机
   }
+  /**
+   * else {
+    SystemStatus.system = STATE_SURFACE_MODE;
+  }
+   */
 }
 
 //===更新状态机===
@@ -296,17 +302,17 @@ void transitionToFlightMode() {
 
   if (transitionStep < totalSteps) {
     // 电机臂朝上，基础舵机转动
-    int baseAngle = map(transitionStep, 0, totalSteps, 20, 130); //电机臂朝上
-    int armAngle = map(transitionStep, 0, totalSteps, 155, 45);   //电机方向向下
-    safeServoWrite(0, baseAngle);  //电机臂舵机
-    safeServoWrite(1, armAngle);   //电机方向舵机
+    int baseAngle1 = map(transitionStep, 0, totalSteps, 20, 130); //电机臂朝上
+    int baseAngle2 = map(transitionStep, 0, totalSteps, 45,155);   //电机方向向下
+    safeServoWrite(0, baseAngle1);  //电机臂舵机
+    safeServoWrite(1, baseAngle2);   //电机方向舵机
     Serial.println("[INFO] Flight mode transition - step 1");
     transitionStep++;
   } else {
     if (motorStep < totalSteps2) {
       // 电机舵机调整（简化，主要用于微调）
-      int Angle1 = map(motorStep, 0, totalSteps2, 0, 90);
-      int Angle2 = map(motorStep, 0, totalSteps2, 170, 80);
+      int Angle1 = map(motorStep, 0, totalSteps2, 90,0);
+      int Angle2 = map(motorStep, 0, totalSteps2, 80,170);
       safeServoWrite(2, Angle1);
       safeServoWrite(3, Angle1);
       safeServoWrite(4, Angle2);
@@ -330,17 +336,17 @@ void transitionToSurfaceMode() {
 
   if (transitionStep < totalSteps1) {
     // 电机臂转下，推力方向水平
-    int baseAngle = map(transitionStep, 0, totalSteps1, 130, 20); //电机臂转下
-    int armAngle = map(transitionStep, 0, totalSteps1, 45, 155);   //电机方向水平
-    safeServoWrite(0, baseAngle);  //电机臂舵机
-    safeServoWrite(1, armAngle);   //电机方向舵机
+    int baseAngle1 = map(transitionStep, 0, totalSteps1, 20,130); //电机臂转下
+    int baseAngle2 = map(transitionStep, 0, totalSteps1, 155,45);   //电机方向水平
+    safeServoWrite(0, baseAngle1);  //电机臂舵机
+    safeServoWrite(1, baseAngle2);   //电机方向舵机
     Serial.println("[INFO] Surface mode transition - step 1");
     transitionStep++;
   } else {
     if (motorStep < totalSteps2) {
       // 电机舵机调整（简化，主要用于微调）
-      int Angle1 = map(motorStep, 0, totalSteps2, 90, 0);
-      int Angle2 = map(motorStep, 0, totalSteps2, 80, 170);
+      int Angle1 = map(motorStep, 0, totalSteps2, 0,90);
+      int Angle2 = map(motorStep, 0, totalSteps2, 170,80);
       safeServoWrite(2, Angle1);
       safeServoWrite(3, Angle1);
       safeServoWrite(4, Angle2);
