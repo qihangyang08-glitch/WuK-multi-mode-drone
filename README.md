@@ -1,7 +1,7 @@
 # WuK Multi-mode Drone — 跨介质可变构无人机
 
 ## 目录
-1. [项目简介 ](#项目简介-project-overview)  
+1. [项目简介 (Project Overview)](#项目简介-project-overview)  
 2. [系统架构 (System Architecture)](#系统架构-system-architecture)  
 3. [硬件组成 (Hardware Components)](#硬件组成-hardware-components)  
 4. [通道分配 (Channel Mapping)](#通道分配-channel-mapping)  
