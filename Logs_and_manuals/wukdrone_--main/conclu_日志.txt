@@ -1,0 +1,32 @@
+=== 阶段 1：环境搭建 ===
+- 确立了 WuK V2 新版控制方案，摒弃 Arduino 外挂逻辑，转向 ArduPilot 源码级开发以实现 Mid-air Morphing 与一键自动着陆。
+- 明确“变几何下蹲”的机械-控制耦合逻辑，提出“空中变构 + 动力切断 + 惯性着陆”的安全控制策略，准备通过动态混控规避 MPC 算力不足。
+- 在 Windows 11 上部署 WSL2 (Ubuntu 20.04/22.04)，完成系统盘迁移到 D 盘，恢复默认用户 qwssx2，解决编译空间与权限问题。
+- 在 Linux 子系统内安装独立 Git、配置 WSL2 与宿主的代理/镜像通道，成功打通 GitHub 访问并克隆 ArduPilot Master 分支。
+- [x] 架构方案冻结。
+- [x] 编译环境系统层就绪。
+- [x] 核心源码（Master）已下载。
+- [x] 依赖库安装。
+- [x] 编译与运行仿真。
+- [ ] 构建模拟变构参数（进行中）。
+
+=== 阶段 2：引入 Gazebo ===
+- 理解 ArduPilot SITL 分为飞控固件（姿态/PID/导航）与 `libraries/SITL` 的物理后端，数据流从 PWM 经 SIM_Frame 转为推力/力矩，再反馈给飞控。
+- 在 `libraries/SITL/SIM_Frame.cpp` 定义 `wuk_motors` 静态数组，采用 X 型布局、让 Servo 9 控制 Roll，右侧角度 0~-90°、左侧 0~90°。
+- 采用 Hijack Strategy：在 `supported_frames` 中将 `Frame("quad", …)` 指向 `wuk_motors`，名称不变但物理实质变成 WuK。
+- 修改代码后走完整编译链：`./waf distclean`、`./waf configure --board sitl`、`./waf copter`，随后 `sim_vehicle.py -v ArduCopter --console --map` 跑 SITL。
+- 基础测试在 MAVProxy 中执行 `mode guided`、`arm throttle`、`takeoff 20`，用 `rc 2 1400`/`rc 4 1400` 校验操控；执行 `servo set 9 1900` 可让电机倾斜导致高度骤降，`servo set 9 1100` 可恢复。
+- 若 `servo set` 无反应，先 `param set SERVO9_FUNCTION 59`，并在 `SIM_Frame.cpp` 的 `update_forces` 首行打印 `input.servos[8]` 验证 PWM 信息。
+- 引入 Gazebo 后架构变化：ArduPilot 仍只算 PWM，物理/可视由 Gazebo 接管，需要写 SDF 描述 WuK 变构结构并用 Servo 9 驱动关节。
+- 通过 Gazebo 安装、GPU 配置与强制 JSON 协议（在 `sim_vehicle.py` 使用 `--model JSON`，并在 MAVProxy 中 `param set SIM_JSON_ENABLE 1`）来解决 "Incorrect protocol magic" 报错。
+- 日常启动流程：终端 A 运行 `gz sim -v4 -r iris_runway.sdf`，终端 B 在 `~/ardupilot` 执行 `sim_vehicle.py -v ArduCopter --model JSON --console --map`，在 MAVProxy 中 `mode guided`、`arm throttle`、`takeoff 5`。
+- SDF 结构说明：`model.config` 描述 WuK Morph Drone，`model.sdf` 包含 `base_link`、左右臂、`morph_joint_right/left`（Revolute joint），`ArduPilotPlugin` 通过 channel 8 映射关节与 PWM。
+- 在 Gazebo 空白世界拖入 `WuK Morph Drone` 模型后，启动 SITL 并输入 `servo set 9 1900` 便可观测左右机臂同步旋转，证明 SITL -> Gazebo 关节链路通畅。
+
+=== 阶段 3：可视化与数据分析 ===
+- 将 `SIM_Frame.h` 中的 `Motor::thrust_vector` 从 private 调整为 public，便于物理层直接覆盖电机推力方向用于实验验证。
+- 在 `Frame::update_forces` 的最前面插入代码：遍历每个电机、读取 `input.servos[roll_servo]`、计算比例 t、线性插值 `current_roll`，使用旋转矩阵暴力修改 `motors[i].thrust_vector`，从而改变推力方向。
+- 在物理更新处添加探针打印：每 100 帧打印 `PWM9`、`motors[0].thrust_vector.z` 与 `motors[0].thrust_vector.length()`，用于验证只是方向改变且推力幅值保持。
+- 验证流程：`./waf copter`，`sim_vehicle.py -v ArduCopter --console`，起飞后 `servo set 9 1900` 导致 `Vector_Z` 接近 0、`Thrust_Mag` 仍为 1，再 `servo set 9 1100` 恢复高度，证明坠落由矢量偏转导致而非动力丧失。
+- 整体实现概览：`Frame::calculate_forces` 将 RC9 映射并平滑为 external roll PWM（借助 `tilt_speed_deg_per_sec` 与 `pwm_per_deg`），调用 `motors[i].set_external_roll_pwm`；`Motor::calculate_forces` 读取该 PWM、计算 roll 角并用 `rotation.from_euler` 将原始 thrust (0,0,-1) 旋转以得到最终受力，异常时重置为 (0,0,-1)。
+- 数据可视化链路：编译 `wuk_log_parser`（`g++ wuk_log_parser.cpp -o tools/wuk_log_parser`），运行 `./tools/wuk_log_parser wuk_gb.log` 生成 `wuk_parsed.csv` 与 `wuk_summary.txt`，再用 `python3 wuk_plot.py wuk_parsed.csv` 输出关键趋势图（`wuk_tilt.png`、`wuk_thrust_delta.png`、`wuk_total_vertical.png`、`wuk_attitude.png`）。
