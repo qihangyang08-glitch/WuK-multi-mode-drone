@@ -1,0 +1,50 @@
+name: Branch Management - Create version_old from main
+
+on:
+  workflow_dispatch:
+    inputs:
+      new_main_message:
+        description: 'Initial commit message for new main branch'
+        required: false
+        default: 'Initialize new main branch'
+
+jobs:
+  create-version-old-and-reset-main:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout repository (full history)
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Configure git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Create version_old branch from current main
+        run: |
+          git checkout main
+          if git ls-remote --exit-code origin version_old; then
+            echo "⚠️  Branch 'version_old' already exists on remote. Skipping creation."
+          else
+            git checkout -b version_old
+            git push origin version_old
+            echo "✅ Branch 'version_old' created from 'main' successfully."
+          fi
+
+      - name: Create new empty main branch
+        env:
+          COMMIT_MSG: ${{ github.event.inputs.new_main_message || 'Initialize new main branch' }}
+        run: |
+          git checkout --orphan new-main-temp
+          git rm -rf .
+          printf '# WuK Multi-mode Drone\n\nThis is the new main branch.\n\nThe previous main branch content has been preserved in the [version_old](../../tree/version_old) branch.\n' > README.md
+          git add README.md
+          git commit -m "${COMMIT_MSG}"
+          git push origin new-main-temp:main --force
+          echo "✅ New 'main' branch created successfully."
+          echo "✅ Old main content is preserved in 'version_old' branch."
