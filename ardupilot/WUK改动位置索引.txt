@@ -1,0 +1,127 @@
+# WuK变构四旋翼项目 - 代码改动位置快速索引
+
+## 标识说明
+所有改动处已添加 [WuK] 注释标识,可使用以下命令快速定位:
+```bash
+grep -r "\[WuK\]" ArduCopter/ libraries/
+```
+
+## 1. 核心飞控代码 (ArduCopter/)
+
+### 新增文件 (已添加头部注释)
+- mode_morph.cpp       [WuK-MORPH] 变构模式实现
+- mode_morph.h         [WuK-MORPH] 变构模式头文件
+- mode_ground.cpp      [WuK-GROUND] 地面模式实现
+- mode_ground.h        [WuK-GROUND] 地面模式头文件
+- WuK_Comms.cpp        [WuK-Comms] 串口通信实现
+- WuK_Comms.h          [WuK-Comms] 串口通信头文件
+
+### 修改的文件 (已添加行内注释)
+- mode.h
+  * 行135: MORPH模式枚举 [WuK-MORPH]
+  * 行136: GROUND模式枚举 [WuK-GROUND]
+
+- Copter.h
+  * 行96:   #include "WuK_Comms.h" [WuK-Comms]
+  * 行188:  friend class WuK_Comms [WuK-Comms]
+  * 行1123: WuK_Comms wuk_comms成员变量 [WuK-Comms]
+
+- Copter.cpp
+  * 行88:    g_wuk_target_angle全局变量定义 [WuK]
+  * 行1019+: set_mode()中更新g_wuk_target_angle [WuK]
+
+- Parameters.h
+  * ParametersG2结构体中添加wuk_*成员变量
+
+- Parameters.cpp
+  * 行680:  GOBJECT(wuk_comms...) 注册WuK_Comms对象
+  * 行1241: WUK_MORPH_RATE参数 [WuK]
+  * 行1249: WUK_MORPH_DWELL参数 [WuK]
+  * 行1256: WUK_COMP_EN参数 [WuK]
+
+## 2. 电机库 (libraries/AP_Motors/)
+
+### 修改的文件
+- AP_Motors_Class.h
+  * 添加虚函数: set_morph_angle(), set_morph_comp_enabled()
+
+- AP_MotorsMatrix.h
+  * 行105-107: set_morph_angle()等方法声明
+  * 行115-118: _morph_angle_deg等成员变量
+
+- AP_MotorsMatrix.cpp
+  * 行303:     [WuK] 变构补偿逻辑 START
+  * 行304-305: cos_morph/sin_morph计算 [WuK]
+  * 行311:     apply_morph补偿条件判断 [WuK]
+  * 行319-326: Roll/Yaw因子旋转矩阵补偿 [WuK]
+  * 新增方法: set_morph_angle()实现
+  * 新增方法: set_ground_thrust()实现
+
+## 3. SITL仿真 (libraries/SITL/)
+
+### 新增文件
+- WuK_SITL_Globals.h   全局变量声明
+
+### 修改的文件
+- SIM_Frame.cpp
+  * 行49-51:  [WuK-SITL] wuk_motors定义头部注释
+  * 行52-75:  wuk_motors电机数组定义(含伺服参数)
+  * 行414-420: 帧类型注册("wuk", "+", "quad"等)
+  * 行802:    读取g_wuk_target_angle [WuK-SITL]
+  * 行800+:   伺服延迟和推力矢量旋转计算逻辑
+
+## 4. 构建配置
+- ArduCopter/wscript
+  * 添加mode_morph.cpp, mode_ground.cpp, WuK_Comms.cpp到源文件列表
+
+## 快速搜索命令
+
+### 查找所有WuK改动
+```bash
+cd ~/ardupilot
+grep -rn "\[WuK" ArduCopter/ libraries/ | grep -v "Binary"
+```
+
+### 按模块搜索
+```bash
+# MORPH模式相关
+grep -rn "\[WuK-MORPH\]" ArduCopter/
+
+# GROUND模式相关
+grep -rn "\[WuK-GROUND\]" ArduCopter/
+
+# 串口通信相关
+grep -rn "\[WuK-Comms\]" ArduCopter/
+
+# 电机混控相关
+grep -rn "\[WuK\]" libraries/AP_Motors/
+
+# SITL仿真相关
+grep -rn "\[WuK-SITL\]" libraries/SITL/
+```
+
+### 查看特定文件的所有WuK改动
+```bash
+# 查看mode_morph.cpp的改动点
+grep -n "\[WuK" ArduCopter/mode_morph.cpp
+
+# 查看AP_MotorsMatrix.cpp的改动点
+grep -n "\[WuK" libraries/AP_Motors/AP_MotorsMatrix.cpp
+```
+
+## 重要改动说明
+
+### ⚠️ 已知缺失功能
+**油门补偿未实现**
+- 位置: libraries/AP_Motors/AP_MotorsMatrix.cpp 第253行后
+- 状态: 缺少 throttle_thrust /= cos_morph 计算
+- 影响: 变构时垂直推力会减小(45°时约为70%)
+- 参考: 详见《WUK变构四旋翼改动报告.md》第3.1.4节
+
+### ✅ 已实现功能
+1. MORPH模式: 0°→45°渐进式变构 + 悬停等待
+2. GROUND模式: 90°构型RC车式控制
+3. Roll/Yaw混控旋转补偿 (推力方向校正)
+4. 串口通信: 与Arduino控制板通信
+5. SITL仿真: 伺服延迟 + 推力矢量旋转
+

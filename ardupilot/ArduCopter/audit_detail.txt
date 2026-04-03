@@ -1,0 +1,49 @@
+We have designed a 4-step implementation plan. Please AUDIT each step for feasibility, correctness, and potential risks (e.g., Watchdog resets, safety interlocks).
+Task A: The "Super-Priority" Logic Switch (Hijacking Control)
+Goal: Override the standard Mission Planner FLTMODE_CH logic. We want strict control via specific channels.
+Logic:
+Intercept RC input before the standard mode switch logic.
+Input: Read Channel 9 and Channel 10 directly.
+Rules:
+If Ch9 > 1800: Force switch to ModeMorph (Transition) -> then auto-switch to ModeGround upon completion.
+If Ch10 > 1800: Force switch to ModeWater.
+Else: Force Loiter (Standard Flight).
+Target File: ArduCopter/switches.cpp (function read_control_switch) OR ArduCopter/Copter.cpp.
+Audit Question: Where is the safest place to inject this "Override" logic so it doesn't get overwritten by standard ArduPilot failsafes?
+Task B: New Flight Modes (Ground & Morph)
+Goal: Create two custom modes that bypass standard PID logic where necessary.
+1. ModeGround (mode_ground.cpp):
+Logic: Treat the drone as a car.
+Control: Pitch Stick -> Total Throttle (Forward speed). Roll Stick -> Differential Thrust (Steering).
+Implementation: Bypass AC_AttitudeControl. We plan to call AP_Motors methods directly (e.g., set_throttle, set_steering) inside run().
+2. ModeMorph (mode_morph.cpp):
+Logic: A transition state. It ignores position hold but maintains basic leveling function(We can strightly use similer code in its other modes).
+Action: It calculates the current morph_angle based on time (Trajectory Planning) and sends this angle to Task C and Task D.
+Audit Question: Can we create a new mode simply by adding a .cpp file and updating mode.h? Does AP_Motors support direct steering control without PID interference?
+Does AP_MotorsMatrix expose a public method like set_output_scaled that allows controlling individual motors directly from a Flight Mode? Or is output_test the only way?
+If we bypass attitude_control, how do we ensure the drone doesn't disarm or trigger a "Crash Check" falsely?
+Is creating a new .cpp file enough, or do we need to register the new mode in mode.cpp's mode_from_number function?
+Task C: Dynamic Mixing (The Physics Engine)
+Goal: Adjust motor outputs based on the arm angle in real-time.
+Target File: libraries/AP_Motors/AP_MotorsMatrix.cpp.
+Logic: Modify output_armed_stabilizing().
+Inject a variable _morph_angle (passed from ModeMorph).
+Use this angle to rotate the mixing matrix logic. (e.g., At 90 deg, Yaw input should result in Roll actuation physics).
+Audit Question: What is the most efficient way to pass morph_angle from the Flight Mode (Application Layer) down to AP_Motors (Library Layer)? Should we add a set_morph_angle() setter?
+Task D: UART Communication (The Actuator Link)
+Goal: Send commands to the Arduino (which controls the physical servos and linear actuators).
+Hardware: Use a spare UART (e.g., Serial2).
+Protocol: Simple Binary [Header, Cmd, Data, Checksum].
+Commands:
+CMD_MORPH: Send target angle (0-90) continuously.
+CMD_ACTUATOR: Extend/Retract linear actuator (via Switch).
+Implementation: Add a scheduled task in Copter::scheduler_tasks (e.g., at 50Hz) to flush the buffer.
+Audit Question: Is adding a task to scheduler_tasks in Copter.cpp the standard way to add periodic tasks in ArduCopter 4.x?
+How do we access the AP_HAL::UARTDriver instance for a specific serial port (e.g., Serial2)? Is AP_SerialManager the correct interface?
+Will a 50Hz task block the main flight loop? Is it safe?
+Part 4: Final Output Request
+Based on your audit of the above plan, please provide:
+Feasibility Rating: (High/Medium/Low) for each task.
+Specific Code Locations: Point out exactly which functions we need to hook into.
+Correction: If any part of our plan violates ArduPilot architecture (e.g., "You can't bypass PID in run()"), provide the correct alternative.
+Step-by-Step Roadmap: Reorder these tasks into a logical development sequence (Dependencies first).

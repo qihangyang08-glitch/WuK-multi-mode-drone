@@ -1,0 +1,127 @@
+WuK 项目 – ArduCopter 开发工作清单
+
+范围
+- 实现双路 UART 通信循环（飞控 <-> Arduino），遵循主循环节奏且不增加调度器负担。
+- 增加 `ModeMorph`（过渡模式）和 `ModeGround`（地面/水面差动推力模式），并实现通道驱动的强制切换（RC7/RC8/RC9）。
+- 增加考虑变形角的混控器调整（0–45° 补偿，然后电机空转/切断，再交由 Arduino 完成到 90°）以及安全的序列控制。
+
+假设 / 约束
+- 目标分支：当前 ardupilot 树（4.x 风格）。不使用外部库。
+- UART 使用 `AP_SerialManager`；写操作为非阻塞；固定帧结构；负载小。
+- RC 通道映射：RC9 触发变形；RC7/RC8 为透传命令到 Arduino（不影响飞控控制回路）。
+- 安全：保留上锁/解锁（arming）、failsafe、crash-check，除非在自定义模式中明确进行门控；不要破坏电机卷发（spool）状态处理。
+
+任务分解（按顺序）
+
+1) 串口链接设计与接入
+- 定义协议帧结构（示例）：`[0xAA][MsgId][Len][Payload...][CRC8]`。保持负载 <=16 字节。
+- 消息集合（从飞控到 Arduino）：
+  * `CMD_ARM_SERVO`：port=ARM，value=angle_deg（0–90）
+  * `CMD_ACT1`：port=ACT1（映射自 RC7），value=0–2000
+  * `CMD_ACT2`：port=ACT2（映射自 RC8），value=0–2000
+  * `CMD_STATUS_REQ`：周期性心跳以确认链路
+- 消息集合（从 Arduino 到飞控）：
+  * `RSP_ACK`（回显 MsgId）
+  * `RSP_STATUS`：当前角度/状态、错误标志
+- 序列化：小端字节序；发送频率上限 50 Hz；对不变的消息进行合并（RC7/8 除心跳外仅在变化时发送）。
+- 代码挂钩：
+  * 通过 `AP_SerialManager` 增加 `SERIALx_PROTOCOL` 槽（USER/自定义 id）。在 `Copter::init_ardupilot()` 或类似初始化路径中获取 `UARTDriver`（参见 `Copter.cpp` 中 serialmanager 用法）。
+  * 在 `Copter::scheduler_tasks`（`Copter.cpp` 顶部）中添加一个 50 Hz 的 SCHED_TASK，调用新方法 `Copter::uart_wuk_update()`；在 `Copter.cpp` 的其它调度处理程序附近实现该方法。确保写入为非阻塞并检查 `uart->txspace()`。
+  * 在新模块 `libraries/AP_WuKComms/`（可创建）或 `Copter` 内局部维护一个小环形缓冲/队列；暴露 `enqueue_cmd` / `service_io` API。若队列已满则丢弃帧以保护调度器。
+  * 在新的参数表中添加与串口相关的参数（例如 `wuk_params.h/cpp` 放在 ArduCopter 下，或复用现有 `Parameters.cpp`），用于波特率/端口配置并连接到 serialmanager 的选择。
+
+2) RC 通道映射与强制覆盖逻辑
+- RC9（>1800）触发 `ModeMorph`；RC9 < 1200 强制 Loiter（基线）；中间区间不生效。
+- RC7/RC8：每次循环读取；若变化超过 deadband，则将 `CMD_ACT1`/`CMD_ACT2` 入队并映射到对应值；不引起模式变更。
+- 钩点：在 `Copter::rc_loop()` 中的 `read_radio()` 之后、`rc().read_mode_switch()` 之前；确保 failsafe 仍然可以覆盖。
+- 记录 `ModeReason` 以便在强制切换模式时写入日志。
+ - 实现步骤：
+   * 在 `Copter.cpp` 的 `rc_loop()` 中插入对 `process_wuk_switches()` 的调用以读取 RC7/8/9 原始值。
+   * 在 `Copter.cpp`（或新文件 `wuk_switches.cpp` 并通过 `wscript` 编译）实现 `process_wuk_switches()`：
+     - 检测 RC9 上升超过 >1800：调用 `set_mode(Mode::Number::MORPH, ModeReason::RC_COMMAND)`。
+     - 检测 RC9 下降到 <1200：调用 `set_mode(Mode::Number::LOITER, ModeReason::RC_COMMAND)` 并发送保持 90° 的命令。
+     - 对于 RC7/8 超过 deadband 的变化：调用 `wuk_comms.enqueue_cmd(CMD_ACT1/2, value)`。
+   * 确保 failsafe 顺序：将 `rc().read_mode_switch()` 放在该块之后，以便标准的模式切换仍可运行；允许 failsafe 覆盖。
+
+3) 模式注册脚手架
+- 添加 `ModeMorph` 和 `ModeGround` 类/文件。
+- 在 `mode.h`、`mode.cpp`（实例与 `mode_from_mode_num` 映射）以及 `wscript` 中注册以参与构建。
+- 分配唯一的 `Mode::Number` 枚举值；确保地面站（GCS）可见（名称字符串）。
+ - 实现步骤：
+   * 在 `ArduCopter/` 下创建 `mode_morph.cpp/.h` 和 `mode_ground.cpp/.h`，`ModeMorph` 与 `ModeGround` 继承自 `Mode`。
+   * 更新 `mode.h`：添加前向声明并在 `Mode::Number` 枚举中加入条目（确保唯一）。
+   * 更新 `mode.cpp`：实例化静态/全局对象，在 `mode_from_mode_num()` 中增加 case，并在模式表中加入名称以便 GCS 显示。
+   * 更新 `ArduCopter/wscript` 以编译新源文件。
+
+4) ModeMorph 行为
+- 入口条件：RC9 > 1800。
+- 生成 `morph_angle` 轨迹：0→45°，在可配置的持续时间内（默认 3 秒）。每周期增量 = dt * 速率。
+- 当角度 <45° 时：
+  * 发送 `CMD_ARM_SERVO`，携带当前角度。
+  * 对 0–45° 范围应用混控补偿（见任务 6），以保持横滚/偏航控制能力。
+- 当角度 >=45° 时：
+  * 命令电机空转/切断（须尊重卷发/启动状态）。等待 2 秒驻留（dwell）。
+  * 发送 `CMD_ARM_SERVO` 且 value=90°，以强制完成。
+  * 切换到 `ModeGround`。
+- 退出条件：驻留结束且交接完成，或 RC9 降到 <1200（立即回退到 Loiter；发送最新舵机状态但跳过驻留）。
+- 安全性：保持着陆/崩溃检测器（land/crash detectors）处于可感知状态——在将油门设为怠速时标记 `land_complete`，尽量避免误触发 crash 报警。
+ - 实现步骤：
+   * 在 `mode_morph.cpp::run()` 中：从调度器获取 dt，通过参数 `MORPH_RATE` 将 `morph_angle` 积分到最多 45°。
+   * 在 <45° 阶段：调用 `wuk_comms.enqueue_cmd(CMD_ARM_SERVO, angle)`；调用 `motors->set_morph_angle(angle)`（Task 6 的新 API）。继续使用现有姿态控制以保持稳定。
+   * 到达 45° 时：将电机期望卷发状态设置为空转/切断（例如 `AP_Motors::set_desired_spool_state(GROUND_IDLE)`），启动驻留计时器（`MORPH_DWELL`）。
+   * 驻留结束后：发送 `CMD_ARM_SERVO` 值 90°，调用 `set_mode(Mode::Number::GROUND, ModeReason::MORPH_COMPLETE)`。
+   * 若 RC9 下降 <1200：立即切回 Loiter，发送保持 90° 的命令并跳过驻留。
+   * 考虑在切断油门时调用 `set_land_complete(true)` 以避免 crash-check 的误报。
+
+5) ModeGround 行为
+- 假定机械臂锁定在 90°；电机在水平面提供差动推力。
+- 控制映射：俯仰杆（Pitch）→ 总体前进推力；横滚杆（Roll）→ 差动推力（转向）。偏航忽略或透传为 0。
+- 控制路径：使用新的电机 API（参见任务 6）设置 roll/pitch 等效输出，而无需完整姿态 PID。保留上锁/卷发（arming/spool）状态逻辑。
+- 退出：RC9 < 1200 → 切回 Loiter（恢复标准飞行）；向 Arduino 发送命令以保持 90°。
+ - 实现步骤：
+   * 在 `mode_ground.cpp::run()` 中：使用现有辅助函数（如 `get_pilot_desired_*`）读取飞手输入。将 pitch 映射为前向推力标量，roll 映射为差动推力标量，yaw 设为 0。
+   * 调用 `motors->set_ground_thrust(fwd, diff)`（Task 6 的新 API），安全地填充混控输入（将 roll/pitch 轴映射为水平推力）。
+   * 若已上锁则保持 `THROTTLE_UNLIMITED`，否则维持关闭状态。遵守上锁检查。
+   * 当 RC9 <1200 时，调用 `set_mode(Mode::Number::LOITER, ModeReason::RC_COMMAND)` 并发送 `CMD_ARM_SERVO 90°` 给 Arduino。
+
+6) 针对变形角的混控适配
+- 在 `AP_MotorsMatrix`（或父类）添加 setter：`set_morph_angle(float deg)`；保存该值以在 `output_armed_stabilizing()` 中使用。
+- 对于 0–45°：旋转控制映射，使偏航输入在臂倾斜时贡献横滚；平滑缩放因子。
+- 对于 >45°：禁用补偿；预期电机处于空转/怠速状态。
+- 确保限制标志（`limit.rpy`、`limit.yaw`、油门限制）尊重修改后的因子；在因子更改后重新计算缩放。
+- 线程安全性：在相同的 fast loop 上下文中更新角度，确保在 `motors_output_main` 之前完成更新。
+ - 实现步骤：
+   * 在 `AP_MotorsMatrix.h/.cpp` 中添加成员 `_morph_angle_deg` 及 setter `set_morph_angle(float deg)`；对角度在 0–90° 之间进行钳位。
+   * 在 `output_armed_stabilizing()` 中，在计算 `_thrust_rpyt_out` 之前，基于 `_morph_angle_deg`（在 0–45° 范围）旋转/调整 `_roll_factor/_yaw_factor`，以实现补偿。超过 45° 时绕过补偿并允许空转/怠速。
+   * 添加辅助函数以缩放因子并保持归一化；保证输出限制在 [-1,1] 之间。因因子变更后更新 limit 标志。
+   * 确保这些调用仅在主线程发生；在注释中说明速率线程构建需在 `motors_output_main` 之前设置角度。
+   * 新增 API `set_ground_thrust(fwd, diff)`，将其安全地写入 `_roll_in/_pitch_in/_yaw_in` 或等效混合输入，而不绕过安全检查。
+
+7) UART 任务实现
+- 使用 `AP_SerialManager` 获取 `UARTDriver`；从参数读取波特率并配置。
+- 在 50 Hz 任务中：轮询 RX，解析帧，处理 ACK/STATUS；每 200 ms 发送心跳；对 RC7/8 和 morph 的状态更改进行入队。
+- 非阻塞：检查 `txspace()`，分小批写入；不进行等待/阻塞调用。
+ - 实现步骤：
+   * 在 `Copter.cpp` 附近的调度处理程序中添加 `Copter::uart_wuk_update()`，并在其中调用 `wuk_comms.service_io(uart)`。
+   * `service_io`：读取可用字节，按状态机解析；处理 ACK 以清除待发队列；处理 STATUS 以记录遥测/角度。
+   * 发送路径：每 200 ms 发送心跳；如果 `txspace()` 足够则发送队列中的命令（RC7/8 变化、morph 角度）。
+   * 添加最小重试/退避计数；总线拥塞时静默丢弃。
+
+8) 参数与日志添加
+- 新增参数：`MORPH_RATE`（deg/s）、`MORPH_DWELL`（s）、`MORPH_UART_PORT`、`MORPH_UART_BAUD`、`MORPH_COMP_EN`（0–45° 补偿 开/关）。
+- 日志记录：当前 `morph_angle`、命令角度、模式切换、UART 链路状态、RC7/8 转发值。
+ - 实现步骤：
+   * 在 `Parameters.cpp/h` 中：将新参数加入 ArduCopter 参数表并设置默认值；通过 GCS 暴露这些参数。
+   * 在 `Log.cpp` 中：扩展日志以包含 `morph_angle`、命令角度、链路状态位、RC7/8 最近发送值（可新增日志消息或在允许的情况下重用现有遥测字段）。
+   * 在 `output_armed_stabilizing()` 中根据 `MORPH_COMP_EN` 门控混控补偿。
+
+9) 测试计划
+- 台架（Bench）：模拟 RC9 切换；验证 UART 帧与模式转换；确保调度器预算未超支。
+- SITL：通过 Python 模拟 Arduino 验证时序与补偿行为；核实 crash/land 标志保持合理。
+- 实飞（谨慎）：从 ModeMorph 到 10° 限制开始；验证补偿与电机空转；逐步推进到 45°/90° 全序列。
+
+完成标准
+- 稳定的 UART 链路，具有变更驱动的更新与心跳；无调度器超时。
+- 当 RC9 >1800 时，`ModeMorph` 能可靠切换，应用 0–45° 的补偿，在 >=45° 时将电机置于怠速/空转，驻留 2 秒，发送 90° 命令并进入 `ModeGround`。
+- `ModeGround` 提供前进/差动推力控制；RC7/8 透传命令发送正常；当 RC9 <1200 时安全退出回 Loiter。
+- 混控器在 0–45° 范围内正确适配，并在超过 45° 后变为中性；无不安全的饱和行为。

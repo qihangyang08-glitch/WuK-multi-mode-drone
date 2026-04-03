@@ -1,0 +1,19 @@
+# WuK Morphing Quadcopter SITL Parameters
+# Auto-start in LOITER mode for testing
+
+# Set FLTMODE1 to LOITER (mode 5)
+FLTMODE1 5
+
+# Set FLTMODE6 as backup LOITER
+FLTMODE6 5
+
+# WuK morphing parameters
+WUK_MORPH_RATE 15.0
+WUK_MORPH_DWELL 2.0
+WUK_MORPH_COMP_EN 1
+
+# Disable arming checks for SITL convenience
+ARMING_CHECK 0
+
+# Use simple mode switching
+FLTMODE_CH 5

@@ -1,0 +1,14 @@
+# --- WuK Configuration ---
+# 1. 变构通道配置 (RC9 -> Servo9)
+SERVO9_FUNCTION 59
+SERVO9_MIN 1000
+SERVO9_MAX 2000
+
+# 2. 解除安全开关 (允许电机旋转)
+BRD_SAFETY_MASK 16384
+
+# 3. 强制使用 JSON 后端 (TCP)
+SIM_JSON_ENABLE 1
+
+# 4. 优化仿真速率 (防止 Reset)
+SCHED_LOOP_RATE 400

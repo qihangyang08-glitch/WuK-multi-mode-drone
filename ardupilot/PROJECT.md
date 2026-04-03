@@ -1,0 +1,87 @@
+# WuK变构四旋翼项目 - 项目介绍与进展
+
+**更新时间**: 2025年12月11日  
+**项目状态**: 核心功能已完成，SITL调试阶段
+
+---
+
+## 📋 项目概述
+
+WuK (Wuhan University Kopter) 是一个基于ArduPilot的变构四旋翼无人机项目，实现了四旋翼在飞行模式和地面模式之间的动态切换。
+
+### 核心特性
+
+1. **三种工作模式**
+   - **LOITER模式**: 标准四旋翼悬停，电机0°垂直朝下
+   - **MORPH模式**: 0°→45°渐变过程，保持高度控制
+   - **GROUND模式**: 90°水平构型，RC车式差速转向
+
+2. **电机布局**
+   - 标准X型布局：M1前右(45°), M2前左(-45°), M3后左(-135°), M4后右(135°)
+   - 伺服驱动倾转：通过RC9通道控制0-90°倾转角度
+
+3. **推力补偿机制**
+   - Roll/Yaw因子旋转矩阵补偿（电机倾转后方向变化）
+   - 垂直推力补偿：throttle /= cos(angle) 保持高度
+
+4. **地面差速控制**
+   - 俯仰杆(Pitch) → 前进/后退
+   - 横滚杆(Roll) → 左右转向（差速推力）
+   - 计算公式：left_thrust = forward - diff * 0.5,  right_thrust = forward + diff * 0.5
+
+---
+
+## 🎯 最新进展 (2025-12-11)
+
+### ✅ 已完成
+
+1. **飞控代码**
+   - MORPH模式：LOITER控制逻辑，自动高度保持
+   - GROUND模式：X型差速转向
+   - 推力补偿：Roll/Yaw旋转矩阵 + 垂直推力补偿
+
+2. **SITL仿真**
+   - 标准X型电机布局（已修正M2/M3映射错误）
+   - 伺服延迟仿真（20°/s）
+   - 推力矢量自动旋转
+
+3. **分析工具**
+   - wuk_parser (C++): 日志→CSV
+   - wuk_plot.py (Python): 4张分析图表+事件检测
+
+### 🔍 关键修正
+
+1. MORPH模式高度不稳 ✅ → 改用LOITER控制
+2. GROUND转向错误 ✅ → 修正为X型布局
+3. SITL电机映射错误 ✅ → M2=-45°前左, M3=-135°后左
+
+---
+
+## 📁 代码结构
+
+### 新增文件
+- ArduCopter/mode_morph.cpp/h
+- ArduCopter/mode_ground.cpp/h
+- ArduCopter/WuK_Comms.cpp/h
+- libraries/SITL/WuK_SITL_Globals.h
+- tools/wuk_parser.cpp
+- tools/wuk_plot.py
+
+### 修改文件（带[WuK]标识）
+- ArduCopter: mode.h, Copter.h, Copter.cpp, Parameters.cpp
+- AP_Motors: AP_MotorsMatrix.cpp (推力补偿+差速控制)
+- SITL: SIM_Frame.cpp (wuk_motors定义)
+
+快速定位：grep -rn "\[WuK" ArduCopter/ libraries/
+
+---
+
+## 🔗 文档索引
+
+- CHANGES.md - 改动详情（详细代码说明）
+- TESTING.md - 测试命令集（SITL测试+日志分析）
+- WUK改动位置索引.txt - 代码快速索引-未更新到最新版本，仅供参考
+
+---
+
+**郑州大学 无人机项目组**

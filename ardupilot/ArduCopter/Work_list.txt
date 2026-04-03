@@ -1,0 +1,128 @@
+WuK Project – ArduCopter Development Work List
+
+Scope
+- Implement dual UART comms loop (FC <-> Arduino) that follows main loop cadence without burdening scheduler.
+- Add ModeMorph (transition) and ModeGround (differential thrust ground/water) plus channel-driven overrides (RC7/8/9).
+- Add morph-aware mixer adjustments (0–45° compensation, then motor idle/cut, then hand-off to Arduino to finish to 90°) and safe sequencing.
+
+Assumptions / Constraints
+- Target branch: current ardupilot tree (4.x style). No external libs.
+- UART uses AP_SerialManager; non-blocking writes; fixed framing; small payloads.
+- RC channel mapping: RC9 triggers transition; RC7/RC8 are pass-through commands to Arduino (no FC control loop effects).
+- Safety: retain arming/failsafe/crash-check unless explicitly gated in custom modes; do not break spool-state handling.
+
+Task Breakdown (ordered)
+
+1) Serial link design & plumbing
+- Define protocol framing (example): [0xAA][MsgId][Len][Payload...][CRC8]. Keep payload <=16 bytes.
+- Message set (from FC to Arduino):
+  * CMD_ARM_SERVO: port=ARM, value=angle_deg (0–90)
+  * CMD_ACT1: port=ACT1 (RC7 mapped), value=0–2000
+  * CMD_ACT2: port=ACT2 (RC8 mapped), value=0–2000
+  * CMD_STATUS_REQ: periodic ping to confirm link
+- Message set (from Arduino to FC):
+  * RSP_ACK (echo MsgId)
+  * RSP_STATUS: current angles/states, error flags
+- Serialization: little-endian; throttle frequency 50 Hz max; coalesce unchanged messages (only send on change for RC7/8 except heartbeat).
+- Code hooks:
+  * Add SERIALx_PROTOCOL slot via AP_SerialManager (USER/ custom id). Obtain UARTDriver in `Copter::init_ardupilot()` or similar init path (see `Copter.cpp`, search for serialmanager usage).
+  * Add a 50 Hz SCHED_TASK entry in `Copter::scheduler_tasks` (top of `Copter.cpp`) invoking a new method `Copter::uart_wuk_update()`; implement in `Copter.cpp` near other scheduler handlers. Ensure non-blocking writes with `uart->txspace()` checks.
+  * Maintain a small ring buffer/queue in a new module `libraries/AP_WuKComms/` (create) or inside `Copter` if scoping locally; expose `enqueue_cmd` / `service_io` APIs. Drop frames if queue full to protect scheduler.
+  * Add params in a new table (e.g., `wuk_params.h/cpp` under ArduCopter or reuse existing `Parameters.cpp`) for baud/port; wire into serialmanager selection.
+
+2) RC channel mapping and override logic
+- RC9 (>1800) triggers ModeMorph; RC9 <1200 forces Loiter (baseline); mid-band no effect.
+- RC7/RC8: read each loop; if changed by > deadband, enqueue CMD_ACT1/CMD_ACT2 with mapped value; no mode changes.
+- Hook point: `Copter::rc_loop()` after `read_radio()` and before `rc().read_mode_switch()`; ensure failsafes can still override.
+- Record ModeReason for logging when forcing mode changes.
+ - Implementation steps:
+   * In `Copter.cpp` `rc_loop()`, insert a call to `process_wuk_switches()` that reads RC7/8/9 raw values.
+   * Implement `process_wuk_switches()` in `Copter.cpp` (or new `wuk_switches.cpp` compiled via `wscript`) to:
+     - Detect RC9 rising >1800: call `set_mode(Mode::Number::MORPH, ModeReason::RC_COMMAND)`.
+     - Detect RC9 falling <1200: call `set_mode(Mode::Number::LOITER, ModeReason::RC_COMMAND)` and send hold-90° command.
+     - For RC7/8 deltas beyond deadband: call `wuk_comms.enqueue_cmd(CMD_ACT1/2, value)`.
+   * Ensure failsafe order: keep `rc().read_mode_switch()` after this block so standard mode switch still runs; allow failsafes to override.
+
+3) Mode registration scaffolding [DONE]
+- Add ModeMorph and ModeGround classes/files.
+- Register in `mode.h`, `mode.cpp` (instances and `mode_from_mode_num` mapping) and wscript for build.
+- Assign unique Mode::Number enums; ensure GCS visibility (name strings).
+ - Implementation steps:
+   * Create `mode_morph.cpp/.h` and `mode_ground.cpp/.h` under ArduCopter/ with `ModeMorph` and `ModeGround` deriving from `Mode`. [DONE]
+   * Update `mode.h`: add forward declarations and enum entries in `Mode::Number` (ensure uniqueness). [DONE]
+   * Update `mode.cpp`: instantiate static/global objects, add cases in `mode_from_mode_num()` and include names in mode tables for GCS labels. [DONE]
+   * Update `ArduCopter/wscript` to compile the new sources. [CHECKED - Auto]
+   * Update `Copter.h` to include new mode headers. [DONE]
+
+4) ModeMorph behavior [DONE]
+- Entry condition: RC9 > 1800.
+- Generate morph_angle trajectory: 0→45° over configurable duration (default 3s). Per-cycle delta = dt * rate.
+- While angle <45°:
+  * Send CMD_ARM_SERVO with current angle.
+  * Apply mixer compensation for first 0–45° (see Task 6) so roll/yaw control is maintained.
+- At angle >=45°:
+  * Command motors to idle/cut (respect spool state). Wait 2s dwell.
+  * Send CMD_ARM_SERVO with value=90° to force completion.
+  * Switch to ModeGround.
+- Exit condition: dwell finished and hand-off done, or RC9 drops <1200 (immediate Loiter fallback; send latest servo state but skip dwell).
+- Safety: keep land/crash detectors aware—mark land_complete when throttling to idle; avoid false crash triggers if possible.
+ - Implementation steps:
+   * In `mode_morph.cpp::run()`: compute dt from scheduler, integrate morph_angle up to 45° using param `MORPH_RATE`. [DONE]
+   * Before 45°: call `wuk_comms.enqueue_cmd(CMD_ARM_SERVO, angle)`; call `motors->set_morph_angle(angle)` (new API, Task 6). Use existing attitude control for stabilization. [DONE - API call commented out]
+   * On reaching 45°: set motors desired spool state to idle/cut (`AP_Motors::set_desired_spool_state(GROUND_IDLE)`), start dwell timer (`MORPH_DWELL`). [DONE]
+   * After dwell: send `CMD_ARM_SERVO` with 90°, call `set_mode(Mode::Number::GROUND, ModeReason::MORPH_COMPLETE)`. [DONE]
+   * On RC9 drop <1200: break to Loiter, send hold-90° once, skip dwell. [DONE]
+   * Consider setting `set_land_complete(true)` when cutting throttle to avoid crash-check false positives. [TODO]
+
+5) ModeGround behavior [DONE]
+- Assumes arms locked at 90°; motors provide differential thrust on horizontal plane.
+- Input mapping: Pitch stick → forward thrust command; Roll stick → differential thrust (steer). Yaw ignored or passthrough as zero.
+- Control path: use new motors API (see Task 6) to set roll/pitch equivalents without full attitude PIDs. Keep arming/spool state logic.
+- Exit: RC9 <1200 → switch to Loiter (resume standard flight); send Arduino command to hold 90°.
+ - Implementation steps:
+   * In `mode_ground.cpp::run()`: read pilot inputs via existing helpers (`get_pilot_desired_*`). Map pitch to forward thrust scalar, roll to differential thrust scalar, set yaw=0. [DONE]
+   * Call `motors->set_ground_thrust(fwd, diff)` (new API in Task 6) that fills mixer inputs safely (roll/pitch axes mapped to horizontal thrust). [DONE - API call commented out]
+   * Keep spool state THROTTLE_UNLIMITED if armed; otherwise remain shut down. Respect arming checks. [DONE]
+   * On RC9 <1200, call `set_mode(Mode::Number::LOITER, ModeReason::RC_COMMAND)` and send `CMD_ARM_SERVO 90°` to Arduino. [DONE]
+
+6) Mixer adaptation for morph angle [DONE]
+- Add setter on AP_MotorsMatrix (or parent) `set_morph_angle(float deg)`; store for use in output_armed_stabilizing().
+- For 0–45°: rotate control mapping so yaw input contributes to roll as arms tilt; scale factors smoothly.
+- For >45°: disable compensation; expect motors idled.
+- Ensure limit flags (`limit.rpy`, `limit.yaw`, throttle limits) respect modified factors; recompute scaling after factor change.
+- Thread safety: update angle in same fast loop context before `motors_output_main`.
+ - Implementation steps:
+   * In `AP_MotorsMatrix.h/.cpp`: add member `_morph_angle_deg` and setter `set_morph_angle(float deg)`; clamp 0–90. [DONE]
+   * In `output_armed_stabilizing()`, before computing `_thrust_rpyt_out`, compute effective roll/yaw factors by rotating `_roll_factor/_yaw_factor` using `_morph_angle_deg` for 0–45°. Beyond 45°, bypass compensation and allow zero/idle throttle. [DONE]
+   * Add helper to scale factors and preserve normalization; keep within [-1,1]. Update limit flags after scaling. [DONE - Implicit in rotation]
+   * Ensure calls happen from main thread only; document that rate-thread builds must set angle before `motors_output_main`. [DONE - Called from Mode::run which is main thread]
+   * Add a new API `set_ground_thrust(fwd, diff)` that writes to `_roll_in/_pitch_in/_yaw_in` appropriately without bypassing safety checks. [DONE]
+
+7) UART task implementation [DONE]
+- Use AP_SerialManager to get UARTDriver; configure baud from a param.
+- In 50 Hz task: poll RX, parse frames, handle ACK/STATUS; send heartbeat every 200 ms; enqueue state changes for RC7/8 and morph.
+- Non-blocking: check `txspace()`, write small bursts; no waits/sleeps.
+ - Implementation steps:
+   * Add `Copter::uart_wuk_update()` in `Copter.cpp` near other scheduler handlers; call `wuk_comms.service_io(uart)`. [DONE]
+   * `service_io`: read available bytes, parse statefully; process ACK to clear pending queue; process STATUS to log telemetry/angles. [DONE]
+   * Transmit path: send heartbeat every 200 ms; send queued commands (RC7/8 changes, morph angles) if `txspace()` sufficient. [DONE]
+   * Add minimal retry/backoff counters; drop silently if bus congested. [DONE - Basic drop logic]
+
+8) Parameter and logging additions [DONE]
+- Add params: MORPH_RATE (deg/s), MORPH_DWELL (s), MORPH_UART_PORT, MORPH_UART_BAUD, MORPH_COMP_EN (0–45° compensation on/off).
+- Log: current morph_angle, commanded angle, mode transitions, UART link status, RC7/8 forwarded values.
+ - Implementation steps:
+   * In `Parameters.cpp/h`: add new params in the ArduCopter table with defaults; expose via GCS. [DONE - WUK_MORPH_RATE/DWELL, WuK_Comms PORT/BAUD]
+   * In `Log.cpp`: extend logging to include morph_angle, commanded angle, link status bits, RC7/8 last sent values (either new log message or reuse existing telemetry with custom fields if allowed). [DONE - Added LOG_WUK_MSG]
+   * Gate mixer compensation with MORPH_COMP_EN inside `output_armed_stabilizing()`. [DONE]
+
+9) Test plan
+- Bench: simulate RC9 toggle; verify UART frames and mode transitions; ensure scheduler budget not exceeded.
+- SITL: mock Arduino via Python to validate timing and compensation behavior; verify crash/land flags stay sane.
+- Flight (cautious): start with ModeMorph to 10° cap; verify compensation and idle; progress to full 45°/90° sequence.
+
+Completion criteria
+- Stable UART link with change-driven updates and heartbeat; no scheduler overruns.
+- ModeMorph transitions reliably at RC9 >1800, applies 0–45° compensation, idles motors at >=45°, dwells 2s, sends 90° command, and enters ModeGround.
+- ModeGround provides forward/differential thrust control; RC7/8 passthrough commands sent; safe exit to Loiter when RC9 <1200.
+- Mixer adapts correctly for 0–45° and is neutral beyond 45°; no unsafe saturation behaviors.
