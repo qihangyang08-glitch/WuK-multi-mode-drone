@@ -1,0 +1,1000 @@
+2026/3/10 20:54:26 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x41
+2026/3/10 20:54:26 : [WuK-LOW] Frame: [0xAA 04 02 00 00 ...]
+2026/3/10 20:54:26 : [WuK-TX] Sending frame #1471: MsgID=0x04 Val=0
+2026/3/10 20:54:26 : [WuK-TX] Heartbeat enqueued at 93643 ms
+2026/3/10 20:54:25 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x41
+2026/3/10 20:54:25 : [WuK-LOW] Frame: [0xAA 04 02 00 00 ...]
+2026/3/10 20:54:25 : [WuK-TX] Sending frame #1470: MsgID=0x04 Val=0
+2026/3/10 20:54:25 : [WuK-TX] Heartbeat enqueued at 92623 ms
+2026/3/10 20:54:25 : PreArm: Need Position Estimate
+2026/3/10 20:54:24 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x41
+2026/3/10 20:54:24 : [WuK-LOW] Frame: [0xAA 04 02 00 00 ...]
+2026/3/10 20:54:24 : [WuK-TX] Sending frame #1469: MsgID=0x04 Val=0
+2026/3/10 20:54:24 : [WuK-TX] Heartbeat enqueued at 91603 ms
+2026/3/10 20:54:23 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x41
+2026/3/10 20:54:23 : [WuK-LOW] Frame: [0xAA 04 02 00 00 ...]
+2026/3/10 20:54:23 : [WuK-TX] Sending frame #1468: MsgID=0x04 Val=0
+2026/3/10 20:54:23 : [WuK-TX] Heartbeat enqueued at 90583 ms
+2026/3/10 20:54:22 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x41
+2026/3/10 20:54:22 : [WuK-LOW] Frame: [0xAA 04 02 00 00 ...]
+2026/3/10 20:54:22 : [WuK-TX] Sending frame #1467: MsgID=0x04 Val=0
+2026/3/10 20:54:22 : [WuK-TX] Heartbeat enqueued at 89563 ms
+2026/3/10 20:54:21 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x41
+2026/3/10 20:54:21 : [WuK-LOW] Frame: [0xAA 04 02 00 00 ...]
+2026/3/10 20:54:21 : [WuK-TX] Sending frame #1466: MsgID=0x04 Val=0
+2026/3/10 20:54:21 : [WuK-TX] Heartbeat enqueued at 88543 ms
+2026/3/10 20:54:20 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x41
+2026/3/10 20:54:20 : [WuK-LOW] Frame: [0xAA 04 02 00 00 ...]
+2026/3/10 20:54:20 : [WuK-TX] Sending frame #1465: MsgID=0x04 Val=0
+2026/3/10 20:54:20 : [WuK-TX] Heartbeat enqueued at 87523 ms
+2026/3/10 20:54:19 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x41
+2026/3/10 20:54:19 : [WuK-LOW] Frame: [0xAA 04 02 00 00 ...]
+2026/3/10 20:54:19 : [WuK-TX] Sending frame #1464: MsgID=0x04 Val=0
+2026/3/10 20:54:19 : [WuK-TX] Heartbeat enqueued at 86503 ms
+2026/3/10 20:54:18 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x41
+2026/3/10 20:54:18 : [WuK-LOW] Frame: [0xAA 04 02 00 00 ...]
+2026/3/10 20:54:18 : [WuK-TX] Sending frame #1463: MsgID=0x04 Val=0
+2026/3/10 20:54:18 : [WuK-TX] Heartbeat enqueued at 85483 ms
+2026/3/10 20:54:17 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x41
+2026/3/10 20:54:17 : [WuK-LOW] Frame: [0xAA 04 02 00 00 ...]
+2026/3/10 20:54:17 : [WuK-TX] Sending frame #1462: MsgID=0x04 Val=0
+2026/3/10 20:54:17 : [WuK-TX] Heartbeat enqueued at 84463 ms
+2026/3/10 20:54:16 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x41
+2026/3/10 20:54:16 : [WuK-LOW] Frame: [0xAA 04 02 00 00 ...]
+2026/3/10 20:54:16 : [WuK-TX] Sending frame #1461: MsgID=0x04 Val=0
+2026/3/10 20:54:16 : [WuK-TX] Heartbeat enqueued at 83443 ms
+2026/3/10 20:54:15 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x70
+2026/3/10 20:54:15 : [WuK-LOW] Frame: [0xAA 03 02 4C 04 ...]
+2026/3/10 20:54:15 : [WuK-TX] Sending frame #1460: MsgID=0x03 Val=1100
+2026/3/10 20:54:15 : pwm9 switched to LOITER
+2026/3/10 20:54:15 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x41
+2026/3/10 20:54:15 : [WuK-LOW] Frame: [0xAA 04 02 00 00 ...]
+2026/3/10 20:54:15 : [WuK-TX] Sending frame #1459: MsgID=0x04 Val=0
+2026/3/10 20:54:15 : [WuK-TX] Heartbeat enqueued at 82423 ms
+2026/3/10 20:54:14 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x41
+2026/3/10 20:54:14 : [WuK-LOW] Frame: [0xAA 04 02 00 00 ...]
+2026/3/10 20:54:14 : [WuK-TX] Sending frame #1458: MsgID=0x04 Val=0
+2026/3/10 20:54:14 : [WuK-TX] Heartbeat enqueued at 81403 ms
+2026/3/10 20:54:13 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x41
+2026/3/10 20:54:13 : [WuK-LOW] Frame: [0xAA 04 02 00 00 ...]
+2026/3/10 20:54:13 : [WuK-TX] Sending frame #1457: MsgID=0x04 Val=0
+2026/3/10 20:54:13 : [WuK-TX] Heartbeat enqueued at 80383 ms
+2026/3/10 20:54:12 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x41
+2026/3/10 20:54:12 : [WuK-LOW] Frame: [0xAA 04 02 00 00 ...]
+2026/3/10 20:54:12 : [WuK-TX] Sending frame #1456: MsgID=0x04 Val=0
+2026/3/10 20:54:12 : [WuK-TX] Heartbeat enqueued at 79363 ms
+2026/3/10 20:54:11 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x41
+2026/3/10 20:54:11 : [WuK-LOW] Frame: [0xAA 04 02 00 00 ...]
+2026/3/10 20:54:11 : [WuK-TX] Sending frame #1455: MsgID=0x04 Val=0
+2026/3/10 20:54:11 : [WuK-TX] Heartbeat enqueued at 78343 ms
+2026/3/10 20:54:10 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x41
+2026/3/10 20:54:10 : [WuK-LOW] Frame: [0xAA 04 02 00 00 ...]
+2026/3/10 20:54:10 : [WuK-TX] Sending frame #1454: MsgID=0x04 Val=0
+2026/3/10 20:54:10 : [WuK-TX] Heartbeat enqueued at 77323 ms
+2026/3/10 20:54:09 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x41
+2026/3/10 20:54:09 : [WuK-LOW] Frame: [0xAA 04 02 00 00 ...]
+2026/3/10 20:54:09 : [WuK-TX] Sending frame #1453: MsgID=0x04 Val=0
+2026/3/10 20:54:09 : [WuK-TX] Heartbeat enqueued at 76303 ms
+2026/3/10 20:54:08 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x41
+2026/3/10 20:54:08 : [WuK-LOW] Frame: [0xAA 04 02 00 00 ...]
+2026/3/10 20:54:08 : [WuK-TX] Sending frame #1452: MsgID=0x04 Val=0
+2026/3/10 20:54:08 : [WuK-TX] Heartbeat enqueued at 75283 ms
+2026/3/10 20:54:07 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x41
+2026/3/10 20:54:07 : [WuK-LOW] Frame: [0xAA 04 02 00 00 ...]
+2026/3/10 20:54:07 : [WuK-TX] Sending frame #1451: MsgID=0x04 Val=0
+2026/3/10 20:54:07 : [WuK-TX] Heartbeat enqueued at 74263 ms
+2026/3/10 20:54:06 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x41
+2026/3/10 20:54:06 : [WuK-LOW] Frame: [0xAA 04 02 00 00 ...]
+2026/3/10 20:54:06 : [WuK-TX] Sending frame #1450: MsgID=0x04 Val=0
+2026/3/10 20:54:06 : [WuK-TX] Heartbeat enqueued at 73243 ms
+2026/3/10 20:54:05 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x41
+2026/3/10 20:54:05 : [WuK-LOW] Frame: [0xAA 04 02 00 00 ...]
+2026/3/10 20:54:05 : [WuK-TX] Sending frame #1449: MsgID=0x04 Val=0
+2026/3/10 20:54:05 : [WuK-TX] Heartbeat enqueued at 72223 ms
+2026/3/10 20:54:04 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x41
+2026/3/10 20:54:04 : [WuK-LOW] Frame: [0xAA 04 02 00 00 ...]
+2026/3/10 20:54:04 : [WuK-TX] Sending frame #1448: MsgID=0x04 Val=0
+2026/3/10 20:54:04 : [WuK-TX] Heartbeat enqueued at 71203 ms
+2026/3/10 20:54:03 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x41
+2026/3/10 20:54:03 : [WuK-LOW] Frame: [0xAA 04 02 00 00 ...]
+2026/3/10 20:54:03 : [WuK-TX] Sending frame #1447: MsgID=0x04 Val=0
+2026/3/10 20:54:03 : [WuK-TX] Heartbeat enqueued at 70183 ms
+2026/3/10 20:54:02 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x41
+2026/3/10 20:54:02 : [WuK-LOW] Frame: [0xAA 04 02 00 00 ...]
+2026/3/10 20:54:02 : [WuK-TX] Sending frame #1446: MsgID=0x04 Val=0
+2026/3/10 20:54:02 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:02 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:02 : [WuK-TX] Sending frame #1445: MsgID=0x01 Val=90
+2026/3/10 20:54:02 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:02 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:02 : [WuK-TX] Sending frame #1444: MsgID=0x01 Val=90
+2026/3/10 20:54:02 : [WuK-TX] TX buffer full, space=1
+2026/3/10 20:54:02 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:02 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:02 : [WuK-TX] Sending frame #1443: MsgID=0x01 Val=90
+2026/3/10 20:54:02 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:02 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:02 : [WuK-TX] Sending frame #1442: MsgID=0x01 Val=90
+2026/3/10 20:54:02 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:02 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:02 : [WuK-TX] Sending frame #1441: MsgID=0x01 Val=90
+2026/3/10 20:54:02 : [WuK-TX] TX buffer full, space=0
+2026/3/10 20:54:02 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:02 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:02 : [WuK-TX] Sending frame #1440: MsgID=0x01 Val=90
+2026/3/10 20:54:02 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:02 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:02 : [WuK-TX] Sending frame #1439: MsgID=0x01 Val=90
+2026/3/10 20:54:02 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:02 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:02 : [WuK-TX] Sending frame #1438: MsgID=0x01 Val=90
+2026/3/10 20:54:02 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:02 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:02 : [WuK-TX] Sending frame #1437: MsgID=0x01 Val=90
+2026/3/10 20:54:02 : [WuK-TX] TX buffer full, space=5
+2026/3/10 20:54:02 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:02 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:02 : [WuK-TX] Sending frame #1436: MsgID=0x01 Val=90
+2026/3/10 20:54:02 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:02 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:02 : [WuK-TX] Sending frame #1435: MsgID=0x01 Val=90
+2026/3/10 20:54:02 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:02 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:02 : [WuK-TX] Sending frame #1434: MsgID=0x01 Val=90
+2026/3/10 20:54:02 : [WuK-TX] Heartbeat enqueued at 69163 ms
+2026/3/10 20:54:02 : [WuK-TX] TX buffer full, space=4
+2026/3/10 20:54:02 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:02 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:02 : [WuK-TX] Sending frame #1433: MsgID=0x01 Val=90
+2026/3/10 20:54:02 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:02 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:02 : [WuK-TX] Sending frame #1432: MsgID=0x01 Val=90
+2026/3/10 20:54:02 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:02 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:02 : [WuK-TX] Sending frame #1431: MsgID=0x01 Val=90
+2026/3/10 20:54:02 : [WuK-TX] Heartbeat queue FULL!
+2026/3/10 20:54:02 : WuK: Switched to GROUND Mode
+2026/3/10 20:54:02 : WuK MORPH -> GROUND after dwell 2.00s
+2026/3/10 20:54:02 : [WuK-TX] TX buffer full, space=3
+2026/3/10 20:54:02 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:02 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:02 : [WuK-TX] Sending frame #1430: MsgID=0x01 Val=90
+2026/3/10 20:54:02 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:02 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:02 : [WuK-TX] Sending frame #1429: MsgID=0x01 Val=90
+2026/3/10 20:54:02 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:02 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:02 : [WuK-TX] Sending frame #1428: MsgID=0x01 Val=90
+2026/3/10 20:54:02 : [WuK-TX] Heartbeat queue FULL!
+2026/3/10 20:54:02 : [WuK-TX] TX buffer full, space=1
+2026/3/10 20:54:02 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:02 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:02 : [WuK-TX] Sending frame #1427: MsgID=0x01 Val=90
+2026/3/10 20:54:02 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:02 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:02 : [WuK-TX] Sending frame #1426: MsgID=0x01 Val=90
+2026/3/10 20:54:02 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:02 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:02 : [WuK-TX] Sending frame #1425: MsgID=0x01 Val=90
+2026/3/10 20:54:02 : [WuK-TX] Heartbeat queue FULL!
+2026/3/10 20:54:02 : [WuK-TX] TX buffer full, space=0
+2026/3/10 20:54:02 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:02 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:02 : [WuK-TX] Sending frame #1424: MsgID=0x01 Val=90
+2026/3/10 20:54:02 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:02 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:02 : [WuK-TX] Sending frame #1423: MsgID=0x01 Val=90
+2026/3/10 20:54:02 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:02 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:02 : [WuK-TX] Sending frame #1422: MsgID=0x01 Val=90
+2026/3/10 20:54:02 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:02 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:02 : [WuK-TX] Sending frame #1421: MsgID=0x01 Val=90
+2026/3/10 20:54:02 : [WuK-TX] Heartbeat queue FULL!
+2026/3/10 20:54:02 : [WuK-TX] TX buffer full, space=5
+2026/3/10 20:54:02 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:02 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:02 : [WuK-TX] Sending frame #1420: MsgID=0x01 Val=90
+2026/3/10 20:54:02 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:02 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:02 : [WuK-TX] Sending frame #1419: MsgID=0x01 Val=90
+2026/3/10 20:54:02 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:02 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:02 : [WuK-TX] Sending frame #1418: MsgID=0x01 Val=90
+2026/3/10 20:54:02 : [WuK-TX] Heartbeat queue FULL!
+2026/3/10 20:54:02 : [WuK-TX] TX buffer full, space=3
+2026/3/10 20:54:02 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:02 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:02 : [WuK-TX] Sending frame #1417: MsgID=0x01 Val=90
+2026/3/10 20:54:02 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:02 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:02 : [WuK-TX] Sending frame #1416: MsgID=0x01 Val=90
+2026/3/10 20:54:02 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:02 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:02 : [WuK-TX] Sending frame #1415: MsgID=0x01 Val=90
+2026/3/10 20:54:02 : [WuK-TX] Heartbeat queue FULL!
+2026/3/10 20:54:02 : [WuK-TX] TX buffer full, space=3
+2026/3/10 20:54:02 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:02 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:02 : [WuK-TX] Sending frame #1414: MsgID=0x01 Val=90
+2026/3/10 20:54:02 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:02 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:02 : [WuK-TX] Sending frame #1413: MsgID=0x01 Val=90
+2026/3/10 20:54:02 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:02 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:02 : [WuK-TX] Sending frame #1412: MsgID=0x01 Val=90
+2026/3/10 20:54:02 : [WuK-TX] Heartbeat queue FULL!
+2026/3/10 20:54:02 : [WuK-TX] TX buffer full, space=1
+2026/3/10 20:54:02 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:02 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:02 : [WuK-TX] Sending frame #1411: MsgID=0x01 Val=90
+2026/3/10 20:54:02 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:02 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:02 : [WuK-TX] Sending frame #1410: MsgID=0x01 Val=90
+2026/3/10 20:54:02 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:02 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:02 : [WuK-TX] Sending frame #1409: MsgID=0x01 Val=90
+2026/3/10 20:54:02 : [WuK-TX] Heartbeat queue FULL!
+2026/3/10 20:54:02 : [WuK-TX] TX buffer full, space=0
+2026/3/10 20:54:02 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:02 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:02 : [WuK-TX] Sending frame #1408: MsgID=0x01 Val=90
+2026/3/10 20:54:02 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:02 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:02 : [WuK-TX] Sending frame #1407: MsgID=0x01 Val=90
+2026/3/10 20:54:02 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:02 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:02 : [WuK-TX] Sending frame #1406: MsgID=0x01 Val=90
+2026/3/10 20:54:02 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:02 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:02 : [WuK-TX] Sending frame #1405: MsgID=0x01 Val=90
+2026/3/10 20:54:02 : [WuK-TX] Heartbeat queue FULL!
+2026/3/10 20:54:02 : [WuK-TX] TX buffer full, space=5
+2026/3/10 20:54:02 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:02 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:02 : [WuK-TX] Sending frame #1404: MsgID=0x01 Val=90
+2026/3/10 20:54:02 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:02 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:02 : [WuK-TX] Sending frame #1403: MsgID=0x01 Val=90
+2026/3/10 20:54:02 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:02 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:02 : [WuK-TX] Sending frame #1402: MsgID=0x01 Val=90
+2026/3/10 20:54:02 : [WuK-TX] Heartbeat queue FULL!
+2026/3/10 20:54:02 : [WuK-TX] TX buffer full, space=4
+2026/3/10 20:54:02 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:02 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:02 : [WuK-TX] Sending frame #1401: MsgID=0x01 Val=90
+2026/3/10 20:54:02 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:02 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:02 : [WuK-TX] Sending frame #1400: MsgID=0x01 Val=90
+2026/3/10 20:54:02 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:02 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:02 : [WuK-TX] Sending frame #1399: MsgID=0x01 Val=90
+2026/3/10 20:54:02 : [WuK-TX] Heartbeat queue FULL!
+2026/3/10 20:54:02 : [WuK-TX] TX buffer full, space=3
+2026/3/10 20:54:02 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:02 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:02 : [WuK-TX] Sending frame #1398: MsgID=0x01 Val=90
+2026/3/10 20:54:02 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:02 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:02 : [WuK-TX] Sending frame #1397: MsgID=0x01 Val=90
+2026/3/10 20:54:02 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:02 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:02 : [WuK-TX] Sending frame #1396: MsgID=0x01 Val=90
+2026/3/10 20:54:02 : [WuK-TX] Heartbeat queue FULL!
+2026/3/10 20:54:02 : [WuK-TX] TX buffer full, space=1
+2026/3/10 20:54:02 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:02 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:02 : [WuK-TX] Sending frame #1395: MsgID=0x01 Val=90
+2026/3/10 20:54:02 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:02 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:02 : [WuK-TX] Sending frame #1394: MsgID=0x01 Val=90
+2026/3/10 20:54:02 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:02 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:02 : [WuK-TX] Sending frame #1393: MsgID=0x01 Val=90
+2026/3/10 20:54:02 : [WuK-TX] Heartbeat queue FULL!
+2026/3/10 20:54:02 : [WuK-TX] TX buffer full, space=0
+2026/3/10 20:54:02 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:02 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:02 : [WuK-TX] Sending frame #1392: MsgID=0x01 Val=90
+2026/3/10 20:54:02 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:02 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:02 : [WuK-TX] Sending frame #1391: MsgID=0x01 Val=90
+2026/3/10 20:54:02 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:02 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:02 : [WuK-TX] Sending frame #1390: MsgID=0x01 Val=90
+2026/3/10 20:54:02 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:02 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:02 : [WuK-TX] Sending frame #1389: MsgID=0x01 Val=90
+2026/3/10 20:54:02 : [WuK-TX] Heartbeat queue FULL!
+2026/3/10 20:54:02 : [WuK-TX] TX buffer full, space=5
+2026/3/10 20:54:02 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:02 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:02 : [WuK-TX] Sending frame #1388: MsgID=0x01 Val=90
+2026/3/10 20:54:02 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:02 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:02 : [WuK-TX] Sending frame #1387: MsgID=0x01 Val=90
+2026/3/10 20:54:02 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:02 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:02 : [WuK-TX] Sending frame #1386: MsgID=0x01 Val=90
+2026/3/10 20:54:02 : [WuK-TX] Heartbeat queue FULL!
+2026/3/10 20:54:02 : [WuK-TX] TX buffer full, space=4
+2026/3/10 20:54:02 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:02 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:02 : [WuK-TX] Sending frame #1385: MsgID=0x01 Val=90
+2026/3/10 20:54:02 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:02 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:02 : [WuK-TX] Sending frame #1384: MsgID=0x01 Val=90
+2026/3/10 20:54:02 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:02 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:02 : [WuK-TX] Sending frame #1383: MsgID=0x01 Val=90
+2026/3/10 20:54:02 : [WuK-TX] Heartbeat queue FULL!
+2026/3/10 20:54:02 : [WuK-TX] TX buffer full, space=3
+2026/3/10 20:54:02 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:02 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:02 : [WuK-TX] Sending frame #1382: MsgID=0x01 Val=90
+2026/3/10 20:54:02 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:02 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:02 : [WuK-TX] Sending frame #1381: MsgID=0x01 Val=90
+2026/3/10 20:54:02 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:02 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:02 : [WuK-TX] Sending frame #1380: MsgID=0x01 Val=90
+2026/3/10 20:54:02 : [WuK-TX] Heartbeat queue FULL!
+2026/3/10 20:54:02 : [WuK-TX] TX buffer full, space=1
+2026/3/10 20:54:02 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:02 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:02 : [WuK-TX] Sending frame #1379: MsgID=0x01 Val=90
+2026/3/10 20:54:02 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:02 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:02 : [WuK-TX] Sending frame #1378: MsgID=0x01 Val=90
+2026/3/10 20:54:02 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:02 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:02 : [WuK-TX] Sending frame #1377: MsgID=0x01 Val=90
+2026/3/10 20:54:02 : [WuK-TX] Heartbeat queue FULL!
+2026/3/10 20:54:02 : [WuK-TX] TX buffer full, space=0
+2026/3/10 20:54:02 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:02 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:02 : [WuK-TX] Sending frame #1376: MsgID=0x01 Val=90
+2026/3/10 20:54:02 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:02 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:02 : [WuK-TX] Sending frame #1375: MsgID=0x01 Val=90
+2026/3/10 20:54:02 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:02 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:02 : [WuK-TX] Sending frame #1374: MsgID=0x01 Val=90
+2026/3/10 20:54:02 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:02 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:02 : [WuK-TX] Sending frame #1373: MsgID=0x01 Val=90
+2026/3/10 20:54:02 : [WuK-TX] Heartbeat queue FULL!
+2026/3/10 20:54:02 : [WuK-TX] TX buffer full, space=5
+2026/3/10 20:54:02 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:02 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:02 : [WuK-TX] Sending frame #1372: MsgID=0x01 Val=90
+2026/3/10 20:54:02 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:02 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:02 : [WuK-TX] Sending frame #1371: MsgID=0x01 Val=90
+2026/3/10 20:54:02 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:02 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:02 : [WuK-TX] Sending frame #1370: MsgID=0x01 Val=90
+2026/3/10 20:54:02 : [WuK-TX] Heartbeat queue FULL!
+2026/3/10 20:54:02 : [WuK-TX] TX buffer full, space=4
+2026/3/10 20:54:02 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:02 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:02 : [WuK-TX] Sending frame #1369: MsgID=0x01 Val=90
+2026/3/10 20:54:02 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:02 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:02 : [WuK-TX] Sending frame #1368: MsgID=0x01 Val=90
+2026/3/10 20:54:02 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:02 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:02 : [WuK-TX] Sending frame #1367: MsgID=0x01 Val=90
+2026/3/10 20:54:02 : [WuK-TX] Heartbeat queue FULL!
+2026/3/10 20:54:02 : [WuK-TX] TX buffer full, space=3
+2026/3/10 20:54:02 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:02 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:02 : [WuK-TX] Sending frame #1366: MsgID=0x01 Val=90
+2026/3/10 20:54:02 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:02 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:02 : [WuK-TX] Sending frame #1365: MsgID=0x01 Val=90
+2026/3/10 20:54:02 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:02 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:02 : [WuK-TX] Sending frame #1364: MsgID=0x01 Val=90
+2026/3/10 20:54:02 : [WuK-TX] Heartbeat queue FULL!
+2026/3/10 20:54:02 : [WuK-TX] TX buffer full, space=2
+2026/3/10 20:54:02 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:02 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:02 : [WuK-TX] Sending frame #1363: MsgID=0x01 Val=90
+2026/3/10 20:54:02 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:02 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:02 : [WuK-TX] Sending frame #1362: MsgID=0x01 Val=90
+2026/3/10 20:54:02 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:02 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:02 : [WuK-TX] Sending frame #1361: MsgID=0x01 Val=90
+2026/3/10 20:54:02 : [WuK-TX] Heartbeat queue FULL!
+2026/3/10 20:54:02 : [WuK-TX] TX buffer full, space=0
+2026/3/10 20:54:02 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:02 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:02 : [WuK-TX] Sending frame #1360: MsgID=0x01 Val=90
+2026/3/10 20:54:02 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:02 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:02 : [WuK-TX] Sending frame #1359: MsgID=0x01 Val=90
+2026/3/10 20:54:02 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:02 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:02 : [WuK-TX] Sending frame #1358: MsgID=0x01 Val=90
+2026/3/10 20:54:02 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:02 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:02 : [WuK-TX] Sending frame #1357: MsgID=0x01 Val=90
+2026/3/10 20:54:02 : [WuK-TX] Heartbeat queue FULL!
+2026/3/10 20:54:02 : [WuK-TX] TX buffer full, space=5
+2026/3/10 20:54:02 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:02 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:02 : [WuK-TX] Sending frame #1356: MsgID=0x01 Val=90
+2026/3/10 20:54:02 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:02 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:02 : [WuK-TX] Sending frame #1355: MsgID=0x01 Val=90
+2026/3/10 20:54:02 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:02 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:02 : [WuK-TX] Sending frame #1354: MsgID=0x01 Val=90
+2026/3/10 20:54:02 : [WuK-TX] Heartbeat queue FULL!
+2026/3/10 20:54:02 : [WuK-TX] TX buffer full, space=4
+2026/3/10 20:54:02 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:02 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:02 : [WuK-TX] Sending frame #1353: MsgID=0x01 Val=90
+2026/3/10 20:54:02 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:02 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:02 : [WuK-TX] Sending frame #1352: MsgID=0x01 Val=90
+2026/3/10 20:54:02 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:02 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:02 : [WuK-TX] Sending frame #1351: MsgID=0x01 Val=90
+2026/3/10 20:54:02 : [WuK-TX] Heartbeat queue FULL!
+2026/3/10 20:54:02 : [WuK-TX] TX buffer full, space=3
+2026/3/10 20:54:02 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:02 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:02 : [WuK-TX] Sending frame #1350: MsgID=0x01 Val=90
+2026/3/10 20:54:02 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:02 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:02 : [WuK-TX] Sending frame #1349: MsgID=0x01 Val=90
+2026/3/10 20:54:02 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:02 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:02 : [WuK-TX] Sending frame #1348: MsgID=0x01 Val=90
+2026/3/10 20:54:02 : [WuK-TX] Heartbeat queue FULL!
+2026/3/10 20:54:01 : [WuK-TX] TX buffer full, space=1
+2026/3/10 20:54:01 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:01 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:01 : [WuK-TX] Sending frame #1347: MsgID=0x01 Val=90
+2026/3/10 20:54:01 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:01 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:01 : [WuK-TX] Sending frame #1346: MsgID=0x01 Val=90
+2026/3/10 20:54:01 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:01 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:01 : [WuK-TX] Sending frame #1345: MsgID=0x01 Val=90
+2026/3/10 20:54:01 : [WuK-TX] Heartbeat queue FULL!
+2026/3/10 20:54:01 : [WuK-TX] TX buffer full, space=0
+2026/3/10 20:54:01 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:01 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:01 : [WuK-TX] Sending frame #1344: MsgID=0x01 Val=90
+2026/3/10 20:54:01 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:01 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:01 : [WuK-TX] Sending frame #1343: MsgID=0x01 Val=90
+2026/3/10 20:54:01 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:01 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:01 : [WuK-TX] Sending frame #1342: MsgID=0x01 Val=90
+2026/3/10 20:54:01 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:01 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:01 : [WuK-TX] Sending frame #1341: MsgID=0x01 Val=90
+2026/3/10 20:54:01 : [WuK-TX] Heartbeat queue FULL!
+2026/3/10 20:54:01 : [WuK-TX] TX buffer full, space=5
+2026/3/10 20:54:01 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:01 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:01 : [WuK-TX] Sending frame #1340: MsgID=0x01 Val=90
+2026/3/10 20:54:01 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:01 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:01 : [WuK-TX] Sending frame #1339: MsgID=0x01 Val=90
+2026/3/10 20:54:01 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:01 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:01 : [WuK-TX] Sending frame #1338: MsgID=0x01 Val=90
+2026/3/10 20:54:01 : [WuK-TX] Heartbeat queue FULL!
+2026/3/10 20:54:01 : [WuK-TX] TX buffer full, space=4
+2026/3/10 20:54:01 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:01 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:01 : [WuK-TX] Sending frame #1337: MsgID=0x01 Val=90
+2026/3/10 20:54:01 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:01 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:01 : [WuK-TX] Sending frame #1336: MsgID=0x01 Val=90
+2026/3/10 20:54:01 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:01 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:01 : [WuK-TX] Sending frame #1335: MsgID=0x01 Val=90
+2026/3/10 20:54:01 : [WuK-TX] Heartbeat queue FULL!
+2026/3/10 20:54:01 : [WuK-TX] TX buffer full, space=2
+2026/3/10 20:54:01 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:01 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:01 : [WuK-TX] Sending frame #1334: MsgID=0x01 Val=90
+2026/3/10 20:54:01 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:01 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:01 : [WuK-TX] Sending frame #1333: MsgID=0x01 Val=90
+2026/3/10 20:54:01 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:01 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:01 : [WuK-TX] Sending frame #1332: MsgID=0x01 Val=90
+2026/3/10 20:54:01 : [WuK-TX] Heartbeat queue FULL!
+2026/3/10 20:54:01 : [WuK-TX] TX buffer full, space=1
+2026/3/10 20:54:01 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:01 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:01 : [WuK-TX] Sending frame #1331: MsgID=0x01 Val=90
+2026/3/10 20:54:01 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:01 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:01 : [WuK-TX] Sending frame #1330: MsgID=0x01 Val=90
+2026/3/10 20:54:01 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:01 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:01 : [WuK-TX] Sending frame #1329: MsgID=0x01 Val=90
+2026/3/10 20:54:01 : [WuK-TX] Heartbeat queue FULL!
+2026/3/10 20:54:01 : [WuK-TX] TX buffer full, space=0
+2026/3/10 20:54:01 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:01 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:01 : [WuK-TX] Sending frame #1328: MsgID=0x01 Val=90
+2026/3/10 20:54:01 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:01 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:01 : [WuK-TX] Sending frame #1327: MsgID=0x01 Val=90
+2026/3/10 20:54:01 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:01 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:01 : [WuK-TX] Sending frame #1326: MsgID=0x01 Val=90
+2026/3/10 20:54:01 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:01 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:01 : [WuK-TX] Sending frame #1325: MsgID=0x01 Val=90
+2026/3/10 20:54:01 : [WuK-TX] Heartbeat queue FULL!
+2026/3/10 20:54:01 : [WuK-TX] TX buffer full, space=5
+2026/3/10 20:54:01 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:01 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:01 : [WuK-TX] Sending frame #1324: MsgID=0x01 Val=90
+2026/3/10 20:54:01 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:01 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:01 : [WuK-TX] Sending frame #1323: MsgID=0x01 Val=90
+2026/3/10 20:54:01 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:01 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:01 : [WuK-TX] Sending frame #1322: MsgID=0x01 Val=90
+2026/3/10 20:54:01 : [WuK-TX] Heartbeat queue FULL!
+2026/3/10 20:54:01 : [WuK-TX] TX buffer full, space=4
+2026/3/10 20:54:01 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:01 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:01 : [WuK-TX] Sending frame #1321: MsgID=0x01 Val=90
+2026/3/10 20:54:01 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:01 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:01 : [WuK-TX] Sending frame #1320: MsgID=0x01 Val=90
+2026/3/10 20:54:01 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:01 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:01 : [WuK-TX] Sending frame #1319: MsgID=0x01 Val=90
+2026/3/10 20:54:01 : [WuK-TX] Heartbeat queue FULL!
+2026/3/10 20:54:01 : [WuK-TX] TX buffer full, space=2
+2026/3/10 20:54:01 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:01 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:01 : [WuK-TX] Sending frame #1318: MsgID=0x01 Val=90
+2026/3/10 20:54:01 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:01 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:01 : [WuK-TX] Sending frame #1317: MsgID=0x01 Val=90
+2026/3/10 20:54:01 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:01 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:01 : [WuK-TX] Sending frame #1316: MsgID=0x01 Val=90
+2026/3/10 20:54:01 : [WuK-TX] Heartbeat queue FULL!
+2026/3/10 20:54:01 : [WuK-TX] TX buffer full, space=1
+2026/3/10 20:54:01 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:01 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:01 : [WuK-TX] Sending frame #1315: MsgID=0x01 Val=90
+2026/3/10 20:54:01 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:01 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:01 : [WuK-TX] Sending frame #1314: MsgID=0x01 Val=90
+2026/3/10 20:54:01 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:01 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:01 : [WuK-TX] Sending frame #1313: MsgID=0x01 Val=90
+2026/3/10 20:54:01 : [WuK-TX] Heartbeat queue FULL!
+2026/3/10 20:54:01 : [WuK-TX] TX buffer full, space=0
+2026/3/10 20:54:01 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:01 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:01 : [WuK-TX] Sending frame #1312: MsgID=0x01 Val=90
+2026/3/10 20:54:01 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:01 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:01 : [WuK-TX] Sending frame #1311: MsgID=0x01 Val=90
+2026/3/10 20:54:01 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:01 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:01 : [WuK-TX] Sending frame #1310: MsgID=0x01 Val=90
+2026/3/10 20:54:01 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:01 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:01 : [WuK-TX] Sending frame #1309: MsgID=0x01 Val=90
+2026/3/10 20:54:01 : [WuK-TX] Heartbeat queue FULL!
+2026/3/10 20:54:01 : [WuK-TX] TX buffer full, space=5
+2026/3/10 20:54:01 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:01 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:01 : [WuK-TX] Sending frame #1308: MsgID=0x01 Val=90
+2026/3/10 20:54:01 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:01 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:01 : [WuK-TX] Sending frame #1307: MsgID=0x01 Val=90
+2026/3/10 20:54:01 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:01 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:01 : [WuK-TX] Sending frame #1306: MsgID=0x01 Val=90
+2026/3/10 20:54:01 : [WuK-TX] Heartbeat queue FULL!
+2026/3/10 20:54:01 : [WuK-TX] TX buffer full, space=3
+2026/3/10 20:54:01 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:01 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:01 : [WuK-TX] Sending frame #1305: MsgID=0x01 Val=90
+2026/3/10 20:54:01 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:01 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:01 : [WuK-TX] Sending frame #1304: MsgID=0x01 Val=90
+2026/3/10 20:54:01 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:01 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:01 : [WuK-TX] Sending frame #1303: MsgID=0x01 Val=90
+2026/3/10 20:54:01 : [WuK-TX] Heartbeat queue FULL!
+2026/3/10 20:54:01 : [WuK-TX] TX buffer full, space=2
+2026/3/10 20:54:01 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:01 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:01 : [WuK-TX] Sending frame #1302: MsgID=0x01 Val=90
+2026/3/10 20:54:01 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:01 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:01 : [WuK-TX] Sending frame #1301: MsgID=0x01 Val=90
+2026/3/10 20:54:01 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:01 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:01 : [WuK-TX] Sending frame #1300: MsgID=0x01 Val=90
+2026/3/10 20:54:01 : [WuK-TX] Heartbeat queue FULL!
+2026/3/10 20:54:01 : [WuK-TX] TX buffer full, space=1
+2026/3/10 20:54:01 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:01 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:01 : [WuK-TX] Sending frame #1299: MsgID=0x01 Val=90
+2026/3/10 20:54:01 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:01 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:01 : [WuK-TX] Sending frame #1298: MsgID=0x01 Val=90
+2026/3/10 20:54:01 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:01 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:01 : [WuK-TX] Sending frame #1297: MsgID=0x01 Val=90
+2026/3/10 20:54:01 : [WuK-TX] Heartbeat queue FULL!
+2026/3/10 20:54:01 : [WuK-TX] TX buffer full, space=0
+2026/3/10 20:54:01 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:01 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:01 : [WuK-TX] Sending frame #1296: MsgID=0x01 Val=90
+2026/3/10 20:54:01 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:01 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:01 : [WuK-TX] Sending frame #1295: MsgID=0x01 Val=90
+2026/3/10 20:54:01 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:01 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:01 : [WuK-TX] Sending frame #1294: MsgID=0x01 Val=90
+2026/3/10 20:54:01 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:01 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:01 : [WuK-TX] Sending frame #1293: MsgID=0x01 Val=90
+2026/3/10 20:54:01 : [WuK-TX] Heartbeat queue FULL!
+2026/3/10 20:54:01 : [WuK-TX] TX buffer full, space=5
+2026/3/10 20:54:01 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:01 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:01 : [WuK-TX] Sending frame #1292: MsgID=0x01 Val=90
+2026/3/10 20:54:01 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:01 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:01 : [WuK-TX] Sending frame #1291: MsgID=0x01 Val=90
+2026/3/10 20:54:01 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:01 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:01 : [WuK-TX] Sending frame #1290: MsgID=0x01 Val=90
+2026/3/10 20:54:01 : [WuK-TX] Heartbeat queue FULL!
+2026/3/10 20:54:01 : [WuK-TX] TX buffer full, space=3
+2026/3/10 20:54:01 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:01 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:01 : [WuK-TX] Sending frame #1289: MsgID=0x01 Val=90
+2026/3/10 20:54:01 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:01 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:01 : [WuK-TX] Sending frame #1288: MsgID=0x01 Val=90
+2026/3/10 20:54:01 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:01 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:01 : [WuK-TX] Sending frame #1287: MsgID=0x01 Val=90
+2026/3/10 20:54:01 : [WuK-TX] Heartbeat queue FULL!
+2026/3/10 20:54:01 : [WuK-TX] TX buffer full, space=3
+2026/3/10 20:54:01 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:01 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:01 : [WuK-TX] Sending frame #1286: MsgID=0x01 Val=90
+2026/3/10 20:54:01 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:01 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:01 : [WuK-TX] Sending frame #1285: MsgID=0x01 Val=90
+2026/3/10 20:54:01 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:01 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:01 : [WuK-TX] Sending frame #1284: MsgID=0x01 Val=90
+2026/3/10 20:54:01 : [WuK-TX] Heartbeat queue FULL!
+2026/3/10 20:54:01 : [WuK-TX] TX buffer full, space=2
+2026/3/10 20:54:01 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:01 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:01 : [WuK-TX] Sending frame #1283: MsgID=0x01 Val=90
+2026/3/10 20:54:01 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:01 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:01 : [WuK-TX] Sending frame #1282: MsgID=0x01 Val=90
+2026/3/10 20:54:01 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:01 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:01 : [WuK-TX] Sending frame #1281: MsgID=0x01 Val=90
+2026/3/10 20:54:01 : [WuK-TX] Heartbeat queue FULL!
+2026/3/10 20:54:01 : [WuK-TX] TX buffer full, space=0
+2026/3/10 20:54:01 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:01 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:01 : [WuK-TX] Sending frame #1280: MsgID=0x01 Val=90
+2026/3/10 20:54:01 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:01 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:01 : [WuK-TX] Sending frame #1279: MsgID=0x01 Val=90
+2026/3/10 20:54:01 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:01 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:01 : [WuK-TX] Sending frame #1278: MsgID=0x01 Val=90
+2026/3/10 20:54:01 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:01 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:01 : [WuK-TX] Sending frame #1277: MsgID=0x01 Val=90
+2026/3/10 20:54:01 : [WuK-TX] Heartbeat queue FULL!
+2026/3/10 20:54:01 : [WuK-TX] TX buffer full, space=5
+2026/3/10 20:54:01 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:01 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:01 : [WuK-TX] Sending frame #1276: MsgID=0x01 Val=90
+2026/3/10 20:54:01 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:01 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:01 : [WuK-TX] Sending frame #1275: MsgID=0x01 Val=90
+2026/3/10 20:54:01 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:01 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:01 : [WuK-TX] Sending frame #1274: MsgID=0x01 Val=90
+2026/3/10 20:54:01 : [WuK-TX] Heartbeat queue FULL!
+2026/3/10 20:54:01 : [WuK-TX] TX buffer full, space=4
+2026/3/10 20:54:01 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:01 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:01 : [WuK-TX] Sending frame #1273: MsgID=0x01 Val=90
+2026/3/10 20:54:01 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:01 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:01 : [WuK-TX] Sending frame #1272: MsgID=0x01 Val=90
+2026/3/10 20:54:01 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:01 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:01 : [WuK-TX] Sending frame #1271: MsgID=0x01 Val=90
+2026/3/10 20:54:01 : [WuK-TX] Heartbeat queue FULL!
+2026/3/10 20:54:01 : [WuK-TX] TX buffer full, space=2
+2026/3/10 20:54:01 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:01 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:01 : [WuK-TX] Sending frame #1270: MsgID=0x01 Val=90
+2026/3/10 20:54:01 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:01 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:01 : [WuK-TX] Sending frame #1269: MsgID=0x01 Val=90
+2026/3/10 20:54:01 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:01 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:01 : [WuK-TX] Sending frame #1268: MsgID=0x01 Val=90
+2026/3/10 20:54:01 : [WuK-TX] Heartbeat queue FULL!
+2026/3/10 20:54:01 : [WuK-TX] TX buffer full, space=2
+2026/3/10 20:54:01 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:01 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:01 : [WuK-TX] Sending frame #1267: MsgID=0x01 Val=90
+2026/3/10 20:54:01 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:01 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:01 : [WuK-TX] Sending frame #1266: MsgID=0x01 Val=90
+2026/3/10 20:54:01 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:01 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:01 : [WuK-TX] Sending frame #1265: MsgID=0x01 Val=90
+2026/3/10 20:54:01 : [WuK-TX] Heartbeat queue FULL!
+2026/3/10 20:54:01 : [WuK-TX] TX buffer full, space=0
+2026/3/10 20:54:01 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:01 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:01 : [WuK-TX] Sending frame #1264: MsgID=0x01 Val=90
+2026/3/10 20:54:01 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:01 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:01 : [WuK-TX] Sending frame #1263: MsgID=0x01 Val=90
+2026/3/10 20:54:01 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:01 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:01 : [WuK-TX] Sending frame #1262: MsgID=0x01 Val=90
+2026/3/10 20:54:01 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:01 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:01 : [WuK-TX] Sending frame #1261: MsgID=0x01 Val=90
+2026/3/10 20:54:01 : [WuK-TX] Heartbeat queue FULL!
+2026/3/10 20:54:01 : [WuK-TX] TX buffer full, space=5
+2026/3/10 20:54:01 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:01 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:01 : [WuK-TX] Sending frame #1260: MsgID=0x01 Val=90
+2026/3/10 20:54:01 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:01 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:01 : [WuK-TX] Sending frame #1259: MsgID=0x01 Val=90
+2026/3/10 20:54:01 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:01 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:01 : [WuK-TX] Sending frame #1258: MsgID=0x01 Val=90
+2026/3/10 20:54:01 : [WuK-TX] Heartbeat queue FULL!
+2026/3/10 20:54:01 : [WuK-TX] TX buffer full, space=3
+2026/3/10 20:54:01 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:01 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:01 : [WuK-TX] Sending frame #1257: MsgID=0x01 Val=90
+2026/3/10 20:54:01 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:01 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:01 : [WuK-TX] Sending frame #1256: MsgID=0x01 Val=90
+2026/3/10 20:54:01 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:01 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:01 : [WuK-TX] Sending frame #1255: MsgID=0x01 Val=90
+2026/3/10 20:54:01 : [WuK-TX] Heartbeat queue FULL!
+2026/3/10 20:54:01 : [WuK-TX] TX buffer full, space=2
+2026/3/10 20:54:01 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:01 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:01 : [WuK-TX] Sending frame #1254: MsgID=0x01 Val=90
+2026/3/10 20:54:01 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:01 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:01 : [WuK-TX] Sending frame #1253: MsgID=0x01 Val=90
+2026/3/10 20:54:01 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:01 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:01 : [WuK-TX] Sending frame #1252: MsgID=0x01 Val=90
+2026/3/10 20:54:01 : [WuK-TX] Heartbeat queue FULL!
+2026/3/10 20:54:01 : [WuK-TX] TX buffer full, space=1
+2026/3/10 20:54:01 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:01 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:01 : [WuK-TX] Sending frame #1251: MsgID=0x01 Val=90
+2026/3/10 20:54:01 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:01 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:01 : [WuK-TX] Sending frame #1250: MsgID=0x01 Val=90
+2026/3/10 20:54:01 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:01 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:01 : [WuK-TX] Sending frame #1249: MsgID=0x01 Val=90
+2026/3/10 20:54:01 : [WuK-TX] Heartbeat queue FULL!
+2026/3/10 20:54:01 : [WuK-TX] TX buffer full, space=0
+2026/3/10 20:54:01 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:01 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:01 : [WuK-TX] Sending frame #1248: MsgID=0x01 Val=90
+2026/3/10 20:54:01 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:01 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:01 : [WuK-TX] Sending frame #1247: MsgID=0x01 Val=90
+2026/3/10 20:54:01 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:01 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:01 : [WuK-TX] Sending frame #1246: MsgID=0x01 Val=90
+2026/3/10 20:54:01 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:01 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:01 : [WuK-TX] Sending frame #1245: MsgID=0x01 Val=90
+2026/3/10 20:54:01 : [WuK-TX] Heartbeat queue FULL!
+2026/3/10 20:54:01 : [WuK-TX] TX buffer full, space=5
+2026/3/10 20:54:01 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:01 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:01 : [WuK-TX] Sending frame #1244: MsgID=0x01 Val=90
+2026/3/10 20:54:01 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:01 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:01 : [WuK-TX] Sending frame #1243: MsgID=0x01 Val=90
+2026/3/10 20:54:01 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:01 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:01 : [WuK-TX] Sending frame #1242: MsgID=0x01 Val=90
+2026/3/10 20:54:01 : [WuK-TX] Heartbeat queue FULL!
+2026/3/10 20:54:01 : [WuK-TX] TX buffer full, space=4
+2026/3/10 20:54:01 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:01 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:01 : [WuK-TX] Sending frame #1241: MsgID=0x01 Val=90
+2026/3/10 20:54:01 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:01 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:01 : [WuK-TX] Sending frame #1240: MsgID=0x01 Val=90
+2026/3/10 20:54:01 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:01 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:01 : [WuK-TX] Sending frame #1239: MsgID=0x01 Val=90
+2026/3/10 20:54:01 : [WuK-TX] Heartbeat queue FULL!
+2026/3/10 20:54:01 : [WuK-TX] TX buffer full, space=2
+2026/3/10 20:54:01 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:01 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:01 : [WuK-TX] Sending frame #1238: MsgID=0x01 Val=90
+2026/3/10 20:54:01 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:01 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:01 : [WuK-TX] Sending frame #1237: MsgID=0x01 Val=90
+2026/3/10 20:54:01 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:01 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:01 : [WuK-TX] Sending frame #1236: MsgID=0x01 Val=90
+2026/3/10 20:54:01 : [WuK-TX] Heartbeat queue FULL!
+2026/3/10 20:54:01 : [WuK-TX] TX buffer full, space=1
+2026/3/10 20:54:01 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:01 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:01 : [WuK-TX] Sending frame #1235: MsgID=0x01 Val=90
+2026/3/10 20:54:01 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:01 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:01 : [WuK-TX] Sending frame #1234: MsgID=0x01 Val=90
+2026/3/10 20:54:01 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:01 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:01 : [WuK-TX] Sending frame #1233: MsgID=0x01 Val=90
+2026/3/10 20:54:01 : [WuK-TX] Heartbeat queue FULL!
+2026/3/10 20:54:01 : [WuK-TX] TX buffer full, space=0
+2026/3/10 20:54:01 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:01 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:01 : [WuK-TX] Sending frame #1232: MsgID=0x01 Val=90
+2026/3/10 20:54:01 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:01 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:01 : [WuK-TX] Sending frame #1231: MsgID=0x01 Val=90
+2026/3/10 20:54:01 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:01 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:01 : [WuK-TX] Sending frame #1230: MsgID=0x01 Val=90
+2026/3/10 20:54:01 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:01 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:01 : [WuK-TX] Sending frame #1229: MsgID=0x01 Val=90
+2026/3/10 20:54:01 : [WuK-TX] Heartbeat queue FULL!
+2026/3/10 20:54:01 : [WuK-TX] TX buffer full, space=5
+2026/3/10 20:54:01 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:01 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:01 : [WuK-TX] Sending frame #1228: MsgID=0x01 Val=90
+2026/3/10 20:54:01 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:01 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:01 : [WuK-TX] Sending frame #1227: MsgID=0x01 Val=90
+2026/3/10 20:54:01 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:01 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:01 : [WuK-TX] Sending frame #1226: MsgID=0x01 Val=90
+2026/3/10 20:54:01 : [WuK-TX] Heartbeat queue FULL!
+2026/3/10 20:54:01 : [WuK-TX] TX buffer full, space=3
+2026/3/10 20:54:01 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:01 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:01 : [WuK-TX] Sending frame #1225: MsgID=0x01 Val=90
+2026/3/10 20:54:01 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:01 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:01 : [WuK-TX] Sending frame #1224: MsgID=0x01 Val=90
+2026/3/10 20:54:01 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:01 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:01 : [WuK-TX] Sending frame #1223: MsgID=0x01 Val=90
+2026/3/10 20:54:01 : [WuK-TX] Heartbeat queue FULL!
+2026/3/10 20:54:01 : [WuK-TX] TX buffer full, space=2
+2026/3/10 20:54:01 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:01 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:01 : [WuK-TX] Sending frame #1222: MsgID=0x01 Val=90
+2026/3/10 20:54:01 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:01 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:01 : [WuK-TX] Sending frame #1221: MsgID=0x01 Val=90
+2026/3/10 20:54:01 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:01 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:01 : [WuK-TX] Sending frame #1220: MsgID=0x01 Val=90
+2026/3/10 20:54:01 : [WuK-TX] Heartbeat queue FULL!
+2026/3/10 20:54:01 : [WuK-TX] TX buffer full, space=2
+2026/3/10 20:54:01 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:01 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:01 : [WuK-TX] Sending frame #1219: MsgID=0x01 Val=90
+2026/3/10 20:54:01 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:01 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:01 : [WuK-TX] Sending frame #1218: MsgID=0x01 Val=90
+2026/3/10 20:54:01 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:01 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:01 : [WuK-TX] Sending frame #1217: MsgID=0x01 Val=90
+2026/3/10 20:54:01 : [WuK-TX] Heartbeat queue FULL!
+2026/3/10 20:54:01 : [WuK-TX] TX buffer full, space=0
+2026/3/10 20:54:01 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:01 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:01 : [WuK-TX] Sending frame #1216: MsgID=0x01 Val=90
+2026/3/10 20:54:01 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:01 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:01 : [WuK-TX] Sending frame #1215: MsgID=0x01 Val=90
+2026/3/10 20:54:01 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:01 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:01 : [WuK-TX] Sending frame #1214: MsgID=0x01 Val=90
+2026/3/10 20:54:01 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:01 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:01 : [WuK-TX] Sending frame #1213: MsgID=0x01 Val=90
+2026/3/10 20:54:01 : [WuK-TX] Heartbeat queue FULL!
+2026/3/10 20:54:01 : [WuK-TX] TX buffer full, space=5
+2026/3/10 20:54:01 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:01 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:01 : [WuK-TX] Sending frame #1212: MsgID=0x01 Val=90
+2026/3/10 20:54:01 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:01 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:01 : [WuK-TX] Sending frame #1211: MsgID=0x01 Val=90
+2026/3/10 20:54:01 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:01 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:01 : [WuK-TX] Sending frame #1210: MsgID=0x01 Val=90
+2026/3/10 20:54:01 : [WuK-TX] Heartbeat queue FULL!
+2026/3/10 20:54:01 : [WuK-TX] TX buffer full, space=4
+2026/3/10 20:54:01 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:01 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:01 : [WuK-TX] Sending frame #1209: MsgID=0x01 Val=90
+2026/3/10 20:54:01 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:01 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:01 : [WuK-TX] Sending frame #1208: MsgID=0x01 Val=90
+2026/3/10 20:54:01 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:01 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:01 : [WuK-TX] Sending frame #1207: MsgID=0x01 Val=90
+2026/3/10 20:54:01 : [WuK-TX] Heartbeat queue FULL!
+2026/3/10 20:54:01 : [WuK-TX] TX buffer full, space=2
+2026/3/10 20:54:01 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:01 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:01 : [WuK-TX] Sending frame #1206: MsgID=0x01 Val=90
+2026/3/10 20:54:01 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:01 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:01 : [WuK-TX] Sending frame #1205: MsgID=0x01 Val=90
+2026/3/10 20:54:01 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:01 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:01 : [WuK-TX] Sending frame #1204: MsgID=0x01 Val=90
+2026/3/10 20:54:01 : [WuK-TX] Heartbeat queue FULL!
+2026/3/10 20:54:01 : [WuK-TX] TX buffer full, space=2
+2026/3/10 20:54:01 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:01 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:01 : [WuK-TX] Sending frame #1203: MsgID=0x01 Val=90
+2026/3/10 20:54:01 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:01 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:01 : [WuK-TX] Sending frame #1202: MsgID=0x01 Val=90
+2026/3/10 20:54:01 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:01 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:01 : [WuK-TX] Sending frame #1201: MsgID=0x01 Val=90
+2026/3/10 20:54:01 : [WuK-TX] Heartbeat queue FULL!
+2026/3/10 20:54:01 : [WuK-TX] TX buffer full, space=0
+2026/3/10 20:54:01 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:01 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:01 : [WuK-TX] Sending frame #1200: MsgID=0x01 Val=90
+2026/3/10 20:54:01 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:01 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]
+2026/3/10 20:54:01 : [WuK-TX] Sending frame #1199: MsgID=0x01 Val=90
+2026/3/10 20:54:01 : [WuK-LOW] Wrote 6 bytes (expected 6), CRC=0x50
+2026/3/10 20:54:01 : [WuK-LOW] Frame: [0xAA 01 02 5A 00 ...]

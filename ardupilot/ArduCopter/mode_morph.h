@@ -22,6 +22,15 @@ protected:
 
 private:
     float _current_morph_angle;
+    uint32_t _hold_start_ms;
     uint32_t _dwell_start_ms;
+    uint32_t _morph_start_ms;
+    uint32_t _last_arm_cmd_send_ms;
+    uint32_t _last_enqueue_warn_ms;
+    uint16_t _last_arm_cmd_value;
+    uint8_t _last_key_bucket;
+    uint8_t _pending_key_repeats;
+    uint16_t _pending_key_value;
+    bool _holding_45;
     bool _dwelling;
 };

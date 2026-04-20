@@ -772,7 +772,6 @@ void Frame::calculate_forces(const Aircraft &aircraft,
     const auto *_sitl = AP::sitl();
     // store per-motor thrust to print later if debugging
     Vector3f per_motor_thrust[32];
-    Vector3f per_motor_thrust_vec[32];
     uint64_t now_us = AP_HAL::micros64();
     static uint64_t last_time_us = 0;
     float dt = 0.0f;
@@ -884,10 +883,7 @@ void Frame::calculate_forces(const Aircraft &aircraft,
         torque += mtorque;
         thrust += mthrust;
         // store for debug print
-        if (i < 32) {
-            per_motor_thrust[i] = mthrust;
-            per_motor_thrust_vec[i] = motors[i].current_thrust_vector;
-        }
+        if (i < 32) per_motor_thrust[i] = mthrust;
         // simulate motor rpm
         if (!is_zero(_sitl->vibe_motor)) {
             rpm[motor_offset+i] = motors[i].get_command() * AP::sitl()->vibe_motor * 60.0f;
@@ -903,7 +899,6 @@ void Frame::calculate_forces(const Aircraft &aircraft,
         fprintf(stderr, ">>> WUK_FRAME: servo9=%d servo10=%d num_motors=%u\n", servo9, servo10, (unsigned)num_motors);
         for (uint8_t i=0; i<num_motors; i++) {
             Vector3f &mt = per_motor_thrust[i];
-            Vector3f &mt_vec = per_motor_thrust_vec[i];
             float mag = sqrtf(sq(mt.x) + sq(mt.y) + sq(mt.z));
             int rs = motors[i].roll_servo;
             int ps = motors[i].pitch_servo;
@@ -913,7 +908,7 @@ void Frame::calculate_forces(const Aircraft &aircraft,
             float motor_cmd = motors[i].get_command();
             float motor_cur = motors[i].get_current();
             fprintf(stderr, "  motor%u: roll_servo=%d pwm=%d pitch_servo=%d pwm=%d applied_pwm=%d cmd=%.3f cur=%.3f thrust_N=%.3f vec=(%.3f,%.3f,%.3f)\n",
-                (unsigned)(i+1), rs, pwm_rs, ps, pwm_ps, applied_pwm, motor_cmd, motor_cur, mag, mt_vec.x, mt_vec.y, mt_vec.z);
+                (unsigned)(i+1), rs, pwm_rs, ps, pwm_ps, applied_pwm, motor_cmd, motor_cur, mag, mt.x, mt.y, mt.z);
         }
         fflush(stderr);
     }
@@ -925,13 +920,12 @@ void Frame::calculate_forces(const Aircraft &aircraft,
         float voltage = battery->get_voltage();
         for (uint8_t i=0; i<num_motors; i++) {
             Vector3f &mt = per_motor_thrust[i];
-            Vector3f &mt_vec = per_motor_thrust_vec[i];
             float mag = sqrtf(sq(mt.x) + sq(mt.y) + sq(mt.z));
             int applied_pwm = (int)roundf(external_current_pwm_f[i]);
             float motor_cmd = motors[i].get_command();
             float motor_cur = motors[i].get_current();
             fprintf(wuk_log, " motor%u applied_pwm=%d cmd=%.3f cur=%.3f volt=%.3f thrust_N=%.3f vec=(%.3f,%.3f,%.3f)\n",
-                    (unsigned)(i+1), applied_pwm, motor_cmd, motor_cur, voltage, mag, mt_vec.x, mt_vec.y, mt_vec.z);
+                    (unsigned)(i+1), applied_pwm, motor_cmd, motor_cur, voltage, mag, mt.x, mt.y, mt.z);
         }
         fflush(wuk_log);
     }
@@ -1013,13 +1007,13 @@ void Frame::calculate_forces(const Aircraft &aircraft,
         fprintf(wuk_json, "],");
         // vx,vy,vz arrays
         fprintf(wuk_json, "\"vx\":[");
-        for (uint8_t i=0;i<num_motors;i++) { fprintf(wuk_json, "%.6f%s", per_motor_thrust_vec[i].x, (i+1==num_motors)?"":","); }
+        for (uint8_t i=0;i<num_motors;i++) { fprintf(wuk_json, "%.6f%s", per_motor_thrust[i].x, (i+1==num_motors)?"":","); }
         fprintf(wuk_json, "],");
         fprintf(wuk_json, "\"vy\":[");
-        for (uint8_t i=0;i<num_motors;i++) { fprintf(wuk_json, "%.6f%s", per_motor_thrust_vec[i].y, (i+1==num_motors)?"":","); }
+        for (uint8_t i=0;i<num_motors;i++) { fprintf(wuk_json, "%.6f%s", per_motor_thrust[i].y, (i+1==num_motors)?"":","); }
         fprintf(wuk_json, "],");
         fprintf(wuk_json, "\"vz\":[");
-        for (uint8_t i=0;i<num_motors;i++) { fprintf(wuk_json, "%.6f%s", per_motor_thrust_vec[i].z, (i+1==num_motors)?"":","); }
+        for (uint8_t i=0;i<num_motors;i++) { fprintf(wuk_json, "%.6f%s", per_motor_thrust[i].z, (i+1==num_motors)?"":","); }
         fprintf(wuk_json, "],");
 
         // totals and altitude

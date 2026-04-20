@@ -1001,6 +1001,7 @@ private:
 
     // WuK Comms
     void uart_wuk_update();
+    Mode::Number get_mode_from_fltmode_channel() const;
     void process_wuk_switches();
     void update_wuk_motor_angle();  // [WuK-FIX] 每周期更新电机角度
 

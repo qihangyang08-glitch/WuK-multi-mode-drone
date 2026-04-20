@@ -149,9 +149,6 @@ void Motor::calculate_forces(const struct sitl_input &input,
         rotation.from_euler(radians(roll), radians(pitch), 0);
         thrust = rotation * thrust;
         rotor_torque = rotation * rotor_torque;
-        current_thrust_vector = rotation * thrust_vector;
-    } else {
-        current_thrust_vector = thrust_vector;
     }
 
     if (use_drag) {

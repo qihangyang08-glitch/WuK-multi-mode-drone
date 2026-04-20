@@ -77,7 +77,7 @@ TEST_SYNC_CHECK_123
 
 #include "Copter.h"
 #include <AP_InertialSensor/AP_InertialSensor_rate_config.h>
-#include <SITL/WuK_SITL_Globals.h>
+// #include <SITL/WuK_SITL_Globals.h>
 
 #define FORCE_VERSION_H_INCLUDE
 #include "version.h"
@@ -961,9 +961,42 @@ void Copter::uart_wuk_update()
 {
     wuk_comms.update();
     // 仅对支持的电机类型启用变构补偿
-    if (AP_MotorsMatrix *m = dynamic_cast<AP_MotorsMatrix*>(motors)) {
+    // [WuK-FIX] dynamic_cast not supported with -fno-rtti, using C-style cast
+    AP_MotorsMatrix *m = (AP_MotorsMatrix *)motors;
+    if (m) {
         m->set_morph_comp_enabled(g2.wuk_comp_enable);
     }
+}
+
+Mode::Number Copter::get_mode_from_fltmode_channel() const
+{
+    // FLTMODE_CH follows ArduPilot convention: 5..15 means RC channel, 0 means disabled.
+    const int8_t fltmode_ch = g.flight_mode_chan.get();
+
+    // Fallback to FLTMODE1 when channel is disabled/out of range.
+    uint8_t switch_pos = 0;
+
+    if (fltmode_ch >= 5 && fltmode_ch <= 15) {
+        RC_Channel *mode_chan = rc().channel(fltmode_ch - 1);
+        if (mode_chan != nullptr) {
+            const uint16_t pwm = mode_chan->get_radio_in();
+            if (pwm < 1231) {
+                switch_pos = 0;
+            } else if (pwm < 1361) {
+                switch_pos = 1;
+            } else if (pwm < 1491) {
+                switch_pos = 2;
+            } else if (pwm < 1621) {
+                switch_pos = 3;
+            } else if (pwm < 1750) {
+                switch_pos = 4;
+            } else {
+                switch_pos = 5;
+            }
+        }
+    }
+
+    return (Mode::Number)flight_modes[switch_pos].get();
 }
 
 void Copter::process_wuk_switches()
@@ -986,16 +1019,17 @@ void Copter::process_wuk_switches()
 
         if (state != last_state) {
             if (state == 0) {
-                GCS_SEND_TEXT(MAV_SEVERITY_INFO, "pwm9 switched to LOITER");
-                // 切换到 Loiter，并发出 ACT2 1100
-                set_mode(Mode::Number::LOITER, ModeReason::RC_COMMAND);
+                const Mode::Number target_mode = get_mode_from_fltmode_channel();
+                GCS_SEND_TEXT(MAV_SEVERITY_INFO, "pwm9 switched to FLTMODE(%u)", (unsigned)target_mode);
+                // 切换到地面站当前FLTMODE档位对应模式，并发出 ACT2 1100
+                set_mode(target_mode, ModeReason::RC_COMMAND);
                 wuk_comms.enqueue_cmd(WuK_Comms::CmdID::ACT2, 1100);
-                g_wuk_target_angle = 0.0f;
+                // g_wuk_target_angle = 0.0f;
             } else if (state == 2) {
                 // 启动 Morph 流程
                 GCS_SEND_TEXT(MAV_SEVERITY_INFO, "pwm9 switched to MORPH");
                 set_mode(Mode::Number::MORPH, ModeReason::RC_COMMAND);
-                g_wuk_target_angle = 0.0f; // 从 0° 开始变构
+                // g_wuk_target_angle = 0.0f; // 从 0° 开始变构
             }
             last_state = state;
         }
@@ -1017,7 +1051,7 @@ void Copter::process_wuk_switches()
             if (val > 1800) {
                 set_mode(Mode::Number::GROUND, ModeReason::RC_COMMAND);
             } else if (val < 1200) {
-                set_mode(Mode::Number::LOITER, ModeReason::RC_COMMAND);
+                set_mode(get_mode_from_fltmode_channel(), ModeReason::RC_COMMAND);
             }
 
             last_rc7_val = val;
@@ -1040,28 +1074,28 @@ void Copter::process_wuk_switches()
 void Copter::update_wuk_motor_angle()
 {
     // Update global variables for SITL
-    extern float g_wuk_target_angle;
-    extern bool g_wuk_morph_active;
-    extern uint32_t g_wuk_last_update_ms;
+    // extern float g_wuk_target_angle;
+    // extern bool g_wuk_morph_active;
+    // extern uint32_t g_wuk_last_update_ms;
     
     if (flightmode->mode_number() == Mode::Number::MORPH) {
-        g_wuk_morph_active = true;
+        // g_wuk_morph_active = true;
         // Target angle will be updated by ModeMorph::run()
     } else {
-        g_wuk_morph_active = false;
+        // g_wuk_morph_active = false;
         
         // [WuK-FIX] 重置电机混控的morph角度（防止补偿意外激活）
         AP_MotorsMatrix *motors_matrix = (AP_MotorsMatrix *)motors;
         
         if (flightmode->mode_number() == Mode::Number::GROUND) {
-            g_wuk_target_angle = 90.0f;
+            // g_wuk_target_angle = 90.0f;
             motors_matrix->set_morph_angle(90.0f);  // GROUND模式：90°（但不启用补偿）
         } else {
-            g_wuk_target_angle = 0.0f;
+            // g_wuk_target_angle = 0.0f;
             motors_matrix->set_morph_angle(0.0f);   // 其他模式：0°（正常飞行）
         }
     }
-    g_wuk_last_update_ms = AP_HAL::millis();
+    // g_wuk_last_update_ms = AP_HAL::millis();
 }
 
 // get the target earth-frame angular velocities in rad/s (Z-axis component used by some gimbals)

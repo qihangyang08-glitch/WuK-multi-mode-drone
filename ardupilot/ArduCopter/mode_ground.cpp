@@ -15,6 +15,8 @@ bool ModeGround::init(bool ignore_checks)
     _target_yaw_rad = ahrs.get_yaw();
     _yaw_locked = false;
     
+    GCS_SEND_TEXT(MAV_SEVERITY_INFO, "WuK: Switched to GROUND Mode");
+
     return true;
 }
 
@@ -24,24 +26,25 @@ void ModeGround::run()
     float target_roll_rad = 0.0f;   // 保持Roll=0（不允许侧倾）
     float target_pitch_rad = 0.0f;  // 保持Pitch=0（不允许俯仰）
 
-    // [WuK] 航向控制逻辑：Roll回中时保持航向，Roll偏移时手动转向
-    float diff_thrust = channel_roll->norm_input();  // Roll摇杆输入（-1.0 ~ 1.0）
+    // [WuK] 航向控制逻辑：RC4回中时保持航向，RC4偏移时手动转向
+    RC_Channel *steer_channel = RC_Channels::rc_channel(CH_4);  // 固定使用RC4做方向输入
+    float diff_thrust = steer_channel != nullptr ? -steer_channel->norm_input() : 0.0f;
     
     float target_yaw_rate_rads = 0.0f;               // 目标偏航角速率
     
-    const float roll_deadzone = 0.1f;  // Roll摇杆死区（10%）
+    const float roll_deadzone = 0.1f;  // RC4方向摇杆死区（10%）
     
     if (fabsf(diff_thrust) > roll_deadzone) {
-        // [模式A] Roll摇杆有输入：手动差速转向模式
+        // [模式A] RC4方向摇杆有输入：手动差速转向模式
         // 使用差速推力控制转向，同时更新目标航向
         _target_yaw_rad = ahrs.get_yaw();  // 跟随当前航向
         _yaw_locked = false;
         
-        // 将Roll输入映射为期望的偏航角速率（用于姿态控制器）
+        // 将RC4输入映射为期望的偏航角速率（用于姿态控制器）
         // 这样可以协同差速转向和姿态稳定
         target_yaw_rate_rads = diff_thrust * radians(90.0f);  // 最大90°/s
     } else {
-        // [模式B] Roll摇杆回中：航向保持模式
+        // [模式B] RC4方向摇杆回中：航向保持模式
         // 使用Yaw PID控制器保持航向稳定
         diff_thrust = 0.0f;  // 清零差速推力
         
@@ -73,9 +76,9 @@ void ModeGround::run()
     );
     
     // 读取飞手前进输入
-    // Pitch 摇杆 -> 前进推力（摇杆前推 = 负输入 = 正推力）
-    float fwd_thrust = -channel_pitch->norm_input();
-    GCS_SEND_TEXT(MAV_SEVERITY_INFO, "fwd_thrust=%.2f ", fwd_thrust);
+    // Pitch 摇杆 -> 前进推力（正向控制：摇杆前推=推力增大）
+    float fwd_thrust = channel_pitch->norm_input();
+    // GCS_SEND_TEXT(MAV_SEVERITY_INFO, "fwd_thrust=%.2f ", fwd_thrust);
     // 将前进推力限制为仅正值（不反向）
     if (fwd_thrust < 0.0f) fwd_thrust = 0.0f;
     

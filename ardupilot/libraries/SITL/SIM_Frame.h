@@ -82,7 +82,7 @@ private:
      */
     const struct Model {
         // 模型质量 kg（整机重量）
-        float mass = 3.5;
+        float mass = 5.5;
 
         // 模型对角尺寸 m（臂展/直径，用于惯量与力矩估算）
         float diagonal_size = 0.8;
@@ -105,7 +105,7 @@ private:
         float battCapacityAh = 0.0;
 
         // 悬停时的推力输出比（CTUN.ThO）在 refAlt 条件下
-        float hoverThrOut = 0.5;
+        float hoverThrOut = 0.35;
 
         // 螺旋桨推力曲线指数 MOT_THST_EXPO（0~1，越大低油门越柔和）
         float propExpo = 0.65;

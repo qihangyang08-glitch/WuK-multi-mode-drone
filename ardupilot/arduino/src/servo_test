@@ -1,0 +1,308 @@
+#include <Arduino.h>
+#include <Servo.h>
+
+// ============================================================================
+// Servo Mapping Test Firmware
+// Purpose:
+// 1) Tune startup phase position (servo.write)
+// 2) Verify logical-angle -> physical-angle mapping
+// 3) Move with interpolation rhythm similar to updateTransitions()
+// Commands via DEBUG_SERIAL:
+//   arm90, arm0, motor90, motor0
+// Optional:
+//   status, help, phase
+// ============================================================================
+
+// --- Pin configuration ---
+const uint8_t PIN_ARM_SERVO_0 = 11;
+const uint8_t PIN_ARM_SERVO_1 = 13;
+
+const uint8_t PIN_MOTOR_SERVO_0 = 4;
+const uint8_t PIN_MOTOR_SERVO_1 = 5;
+const uint8_t PIN_MOTOR_SERVO_2 = 6;
+const uint8_t PIN_MOTOR_SERVO_3 = 7;
+
+#define DEBUG_SERIAL Serial
+#define DEBUG_BAUD 9600
+
+Servo armServos[2];
+Servo motorServos[4];
+
+// --- Adjustable startup phase (direct write) ---
+// Tune these values and reboot for quick phase validation.
+const int INIT_ARM_SERVO_0 = 0;
+const int INIT_ARM_SERVO_1 = 115;
+const int INIT_MOTOR_SERVO_0 = 0;
+const int INIT_MOTOR_SERVO_1 = 0;
+const int INIT_MOTOR_SERVO_2 = 170;
+const int INIT_MOTOR_SERVO_3 = 170;
+const uint32_t INIT_HOLD_MS = 3000;
+const uint16_t ATTACH_STAGGER_MS = 30;
+
+// --- Adjustable mapping endpoints (same structure as original firmware) ---
+// Arm logical 0-90
+const int MAP_ARM0_L0 = 0;
+const int MAP_ARM0_L90 = 90;
+const int MAP_ARM1_L0 = 115;
+const int MAP_ARM1_L90 = 15;
+
+// Motor logical 0-90
+const int MAP_MOTOR01_L0 = 0;
+const int MAP_MOTOR01_L90 = 90;
+const int MAP_MOTOR23_L0 = 170;
+const int MAP_MOTOR23_L90 = 80;
+
+// --- Transition rhythm (copied from original behavior) ---
+const float SPEED_NORMAL = 30.0f;
+const float SPEED_SLOW = 10.0f;  // Slow segment while arm decreases from high angle
+
+float currentArmAngle = 0.0f;    // logical angle 0-90
+float currentMotorAngle = 0.0f;  // logical angle 0-90
+float targetArmAngle = 0.0f;
+float targetMotorAngle = 0.0f;
+
+unsigned long lastLoopTime = 0;
+
+char cmdBuffer[32];
+uint8_t cmdIdx = 0;
+
+void applyStartupPhase();
+void writeMappedServos();
+void updateTransitionsLikeOriginal();
+void processDebugCommandInput();
+void handleCommand(char* cmd);
+void printStatus();
+void printHelp();
+
+void setup() {
+    DEBUG_SERIAL.begin(DEBUG_BAUD);
+    delay(1000);
+
+    // Preload target angles before attach so the first PWM after attach is desired.
+    armServos[0].write(INIT_ARM_SERVO_0);
+    armServos[1].write(INIT_ARM_SERVO_1);
+    motorServos[0].write(INIT_MOTOR_SERVO_0);
+    motorServos[1].write(INIT_MOTOR_SERVO_1);
+    motorServos[2].write(INIT_MOTOR_SERVO_2);
+    motorServos[3].write(INIT_MOTOR_SERVO_3);
+
+    armServos[0].attach(PIN_ARM_SERVO_0);
+    delay(ATTACH_STAGGER_MS);
+    armServos[1].attach(PIN_ARM_SERVO_1);
+    delay(ATTACH_STAGGER_MS);
+
+    motorServos[0].attach(PIN_MOTOR_SERVO_0);
+    delay(ATTACH_STAGGER_MS);
+    motorServos[1].attach(PIN_MOTOR_SERVO_1);
+    delay(ATTACH_STAGGER_MS);
+    motorServos[2].attach(PIN_MOTOR_SERVO_2);
+    delay(ATTACH_STAGGER_MS);
+    motorServos[3].attach(PIN_MOTOR_SERVO_3);
+    delay(ATTACH_STAGGER_MS);
+
+    DEBUG_SERIAL.println(F("======================================"));
+    DEBUG_SERIAL.println(F("[TEST] Servo mapping test firmware"));
+    DEBUG_SERIAL.println(F("[TEST] Apply startup phase (servo.write)..."));
+    DEBUG_SERIAL.println(F("======================================"));
+
+    applyStartupPhase();
+    delay(INIT_HOLD_MS);
+
+    // Start from logical zero after startup phase hold.
+    currentArmAngle = 0.0f;
+    currentMotorAngle = 0.0f;
+    targetArmAngle = 0.0f;
+    targetMotorAngle = 0.0f;
+    writeMappedServos();
+
+    printHelp();
+    printStatus();
+
+    lastLoopTime = millis();
+}
+
+void loop() {
+    processDebugCommandInput();
+    updateTransitionsLikeOriginal();
+
+    static uint32_t lastStatusMs = 0;
+    if (millis() - lastStatusMs > 1000) {
+        printStatus();
+        lastStatusMs = millis();
+    }
+}
+
+void applyStartupPhase() {
+    armServos[0].write(INIT_ARM_SERVO_0);
+    armServos[1].write(INIT_ARM_SERVO_1);
+
+    motorServos[0].write(INIT_MOTOR_SERVO_0);
+    motorServos[1].write(INIT_MOTOR_SERVO_1);
+    motorServos[2].write(INIT_MOTOR_SERVO_2);
+    motorServos[3].write(INIT_MOTOR_SERVO_3);
+
+    DEBUG_SERIAL.print(F("[PHASE] arm0="));
+    DEBUG_SERIAL.print(INIT_ARM_SERVO_0);
+    DEBUG_SERIAL.print(F(" arm1="));
+    DEBUG_SERIAL.print(INIT_ARM_SERVO_1);
+    DEBUG_SERIAL.print(F(" motor0="));
+    DEBUG_SERIAL.print(INIT_MOTOR_SERVO_0);
+    DEBUG_SERIAL.print(F(" motor1="));
+    DEBUG_SERIAL.print(INIT_MOTOR_SERVO_1);
+    DEBUG_SERIAL.print(F(" motor2="));
+    DEBUG_SERIAL.print(INIT_MOTOR_SERVO_2);
+    DEBUG_SERIAL.print(F(" motor3="));
+    DEBUG_SERIAL.println(INIT_MOTOR_SERVO_3);
+}
+
+void writeMappedServos() {
+    // Keep logical range bounded.
+    if (currentArmAngle < 0.0f) currentArmAngle = 0.0f;
+    if (currentArmAngle > 90.0f) currentArmAngle = 90.0f;
+    if (currentMotorAngle < 0.0f) currentMotorAngle = 0.0f;
+    if (currentMotorAngle > 90.0f) currentMotorAngle = 90.0f;
+
+    int s0 = map((long)currentArmAngle, 0, 90, MAP_ARM0_L0, MAP_ARM0_L90);
+    int s1 = map((long)currentArmAngle, 0, 90, MAP_ARM1_L0, MAP_ARM1_L90);
+
+    int m01 = map((long)currentMotorAngle, 0, 90, MAP_MOTOR01_L0, MAP_MOTOR01_L90);
+    int m23 = map((long)currentMotorAngle, 0, 90, MAP_MOTOR23_L0, MAP_MOTOR23_L90);
+
+    armServos[0].write(s0);
+    armServos[1].write(s1);
+
+    motorServos[0].write(m01);
+    motorServos[1].write(m01);
+    motorServos[2].write(m23);
+    motorServos[3].write(m23);
+}
+
+void updateTransitionsLikeOriginal() {
+    unsigned long now = millis();
+    float dt = (now - lastLoopTime) / 1000.0f;
+    lastLoopTime = now;
+
+    if (dt > 0.1f) dt = 0.1f;
+
+    bool changed = false;
+
+    if (currentArmAngle < targetArmAngle) {
+        currentArmAngle += SPEED_NORMAL * dt;
+        if (currentArmAngle > targetArmAngle) currentArmAngle = targetArmAngle;
+        changed = true;
+    } else if (currentArmAngle > targetArmAngle) {
+        float speed = (currentArmAngle > 45.0f) ? SPEED_SLOW : SPEED_NORMAL;
+        currentArmAngle -= speed * dt;
+        if (currentArmAngle < targetArmAngle) currentArmAngle = targetArmAngle;
+        changed = true;
+    }
+
+    if (currentMotorAngle < targetMotorAngle) {
+        currentMotorAngle += SPEED_NORMAL * dt;
+        if (currentMotorAngle > targetMotorAngle) currentMotorAngle = targetMotorAngle;
+        changed = true;
+    } else if (currentMotorAngle > targetMotorAngle) {
+        currentMotorAngle -= SPEED_NORMAL * dt;
+        if (currentMotorAngle < targetMotorAngle) currentMotorAngle = targetMotorAngle;
+        changed = true;
+    }
+
+    if (changed) {
+        writeMappedServos();
+    }
+}
+
+void processDebugCommandInput() {
+    while (DEBUG_SERIAL.available() > 0) {
+        char c = (char)DEBUG_SERIAL.read();
+
+        if (c == '\r') {
+            continue;
+        }
+
+        if (c == '\n') {
+            cmdBuffer[cmdIdx] = '\0';
+            if (cmdIdx > 0) {
+                handleCommand(cmdBuffer);
+            }
+            cmdIdx = 0;
+            continue;
+        }
+
+        if (cmdIdx < sizeof(cmdBuffer) - 1) {
+            if (c >= 'A' && c <= 'Z') {
+                c = (char)(c - 'A' + 'a');
+            }
+            cmdBuffer[cmdIdx++] = c;
+        }
+    }
+}
+
+void handleCommand(char* cmd) {
+    if (strcmp(cmd, "arm90") == 0) {
+        targetArmAngle = 90.0f;
+        DEBUG_SERIAL.println(F("[CMD] arm90 -> targetArm=90"));
+    } else if (strcmp(cmd, "arm0") == 0) {
+        targetArmAngle = 0.0f;
+        DEBUG_SERIAL.println(F("[CMD] arm0 -> targetArm=0"));
+    } else if (strcmp(cmd, "motor90") == 0) {
+        targetMotorAngle = 90.0f;
+        DEBUG_SERIAL.println(F("[CMD] motor90 -> targetMotor=90"));
+    } else if (strcmp(cmd, "motor0") == 0) {
+        targetMotorAngle = 0.0f;
+        DEBUG_SERIAL.println(F("[CMD] motor0 -> targetMotor=0"));
+    } else if (strcmp(cmd, "phase") == 0) {
+        applyStartupPhase();
+        DEBUG_SERIAL.println(F("[CMD] phase -> startup phase applied immediately"));
+    } else if (strcmp(cmd, "status") == 0) {
+        printStatus();
+    } else if (strcmp(cmd, "help") == 0) {
+        printHelp();
+    } else {
+        DEBUG_SERIAL.print(F("[CMD] Unknown: "));
+        DEBUG_SERIAL.println(cmd);
+        printHelp();
+    }
+}
+
+void printStatus() {
+    int s0 = map((long)currentArmAngle, 0, 90, MAP_ARM0_L0, MAP_ARM0_L90);
+    int s1 = map((long)currentArmAngle, 0, 90, MAP_ARM1_L0, MAP_ARM1_L90);
+    int m01 = map((long)currentMotorAngle, 0, 90, MAP_MOTOR01_L0, MAP_MOTOR01_L90);
+    int m23 = map((long)currentMotorAngle, 0, 90, MAP_MOTOR23_L0, MAP_MOTOR23_L90);
+
+    DEBUG_SERIAL.print(F("[STATUS] arm="));
+    DEBUG_SERIAL.print(currentArmAngle, 1);
+    DEBUG_SERIAL.print(F("/"));
+    DEBUG_SERIAL.print(targetArmAngle, 1);
+    DEBUG_SERIAL.print(F(" motor="));
+    DEBUG_SERIAL.print(currentMotorAngle, 1);
+    DEBUG_SERIAL.print(F("/"));
+    DEBUG_SERIAL.print(targetMotorAngle, 1);
+    DEBUG_SERIAL.print(F(" | servo arm("));
+    DEBUG_SERIAL.print(s0);
+    DEBUG_SERIAL.print(F(","));
+    DEBUG_SERIAL.print(s1);
+    DEBUG_SERIAL.print(F(") motor("));
+    DEBUG_SERIAL.print(m01);
+    DEBUG_SERIAL.print(F(","));
+    DEBUG_SERIAL.print(m01);
+    DEBUG_SERIAL.print(F(","));
+    DEBUG_SERIAL.print(m23);
+    DEBUG_SERIAL.print(F(","));
+    DEBUG_SERIAL.print(m23);
+    DEBUG_SERIAL.println(F(")"));
+}
+
+void printHelp() {
+    DEBUG_SERIAL.println(F("======================================"));
+    DEBUG_SERIAL.println(F("[HELP] Commands:"));
+    DEBUG_SERIAL.println(F("  arm90   - arm logical angle -> 90"));
+    DEBUG_SERIAL.println(F("  arm0    - arm logical angle -> 0"));
+    DEBUG_SERIAL.println(F("  motor90 - motor logical angle -> 90"));
+    DEBUG_SERIAL.println(F("  motor0  - motor logical angle -> 0"));
+    DEBUG_SERIAL.println(F("  status  - print current status"));
+    DEBUG_SERIAL.println(F("  phase   - apply startup phase once"));
+    DEBUG_SERIAL.println(F("  help    - print this help"));
+    DEBUG_SERIAL.println(F("======================================"));
+}

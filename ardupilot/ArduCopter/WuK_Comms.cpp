@@ -30,11 +30,18 @@ void WuK_Comms::init()
 
     // Option 2: Use the _port parameter to select the UART directly
     // This is more robust if we can't change SerialManager
+    GCS_SEND_TEXT(MAV_SEVERITY_INFO, "[WuK] Initializing UART port=%d baud=%ld", (int)_port, (long)_baud);
+    
     if (_port >= 0) {
         _uart = hal.serial(_port);
         if (_uart) {
             _uart->begin(_baud);
+            GCS_SEND_TEXT(MAV_SEVERITY_INFO, "[WuK] UART%d init SUCCESS @ %ld baud", (int)_port, (long)_baud);
+        } else {
+            GCS_SEND_TEXT(MAV_SEVERITY_ERROR, "[WuK] UART%d init FAILED - serial() returned nullptr", (int)_port);
         }
+    } else {
+        GCS_SEND_TEXT(MAV_SEVERITY_ERROR, "[WuK] Invalid port number: %d", (int)_port);
     }
 }
 
@@ -63,17 +70,32 @@ bool WuK_Comms::enqueue_cmd(CmdID cmd_id, uint16_t value)
 
 void WuK_Comms::service_tx()
 {
-    // Send heartbeat every 200ms
+    // Send heartbeat every 1000ms (降低频率便于调试)
     uint32_t now = AP_HAL::millis();
-    if (now - _last_heartbeat_ms > 200) {
+    static uint32_t last_hb_full_log_ms = 0;
+    static uint32_t last_txspace_log_ms = 0;
+    static uint32_t last_tx_stat_ms = 0;
+    static uint16_t sent_since_stat = 0;
+    if (now - _last_heartbeat_ms > 1000) {
         if (enqueue_cmd(CmdID::STATUS_REQ, 0)) {
             _last_heartbeat_ms = now;
+        } else {
+            if (now - last_hb_full_log_ms > 2000) {
+                GCS_SEND_TEXT(MAV_SEVERITY_WARNING, "[WuK-TX] HB queue full");
+                last_hb_full_log_ms = now;
+            }
         }
     }
 
     // Process queue
+    static uint32_t total_sent = 0;
     while (_head != _tail) {
-        if (_uart->txspace() < (FRAME_OVERHEAD + 2)) { // 2 bytes for value
+        uint16_t txspace = _uart->txspace();
+        if (txspace < (FRAME_OVERHEAD + 2)) { // 2 bytes for value
+            if (now - last_txspace_log_ms > 2000) {
+                GCS_SEND_TEXT(MAV_SEVERITY_WARNING, "[WuK-TX] TX buf low:%u", txspace);
+                last_txspace_log_ms = now;
+            }
             break;
         }
 
@@ -81,10 +103,22 @@ void WuK_Comms::service_tx()
         uint8_t payload[2];
         payload[0] = item.value & 0xFF;
         payload[1] = (item.value >> 8) & 0xFF;
-        
+
         send_frame((uint8_t)item.cmd_id, payload, 2);
+        ++total_sent;
+        ++sent_since_stat;
         
         _tail = (_tail + 1) % QUEUE_SIZE;
+    }
+
+    if (now - last_tx_stat_ms > 2000) {
+        const uint8_t q_depth = (_head >= _tail) ? (_head - _tail) : (QUEUE_SIZE - _tail + _head);
+        GCS_SEND_TEXT(MAV_SEVERITY_INFO, "[WuK-TX] sent=%lu(+%u) q=%u", 
+                      (unsigned long)total_sent,
+                      (unsigned int)sent_since_stat,
+                      (unsigned int)q_depth);
+        sent_since_stat = 0;
+        last_tx_stat_ms = now;
     }
 }
 
@@ -169,7 +203,9 @@ void WuK_Comms::process_frame()
 
             // Update motors with current morph angle (Task 6 integration)
             // Assuming angle is in degrees. If centi-degrees, divide by 100.0f
-            if (AP_MotorsMatrix *m = dynamic_cast<AP_MotorsMatrix*>(copter.motors)) {
+            // [WuK-FIX] dynamic_cast not supported with -fno-rtti, using C-style cast
+            AP_MotorsMatrix *m = (AP_MotorsMatrix *)copter.motors;
+            if (m) {
                 m->set_morph_angle((float)angle);
             }
         }
@@ -197,20 +233,34 @@ uint8_t WuK_Comms::crc8_update(uint8_t crc, uint8_t data)
 void WuK_Comms::send_frame(uint8_t msg_id, const uint8_t* payload, uint8_t len)
 {
     uint8_t crc = 0;
-    _uart->write(HEADER_BYTE);
+
+    size_t written = 0;
+    written += _uart->write(HEADER_BYTE);
     
-    _uart->write(msg_id);
+    written += _uart->write(msg_id);
     crc = crc8_update(crc, msg_id);
     
-    _uart->write(len);
+    written += _uart->write(len);
     crc = crc8_update(crc, len);
     
     for (uint8_t i = 0; i < len; i++) {
-        _uart->write(payload[i]);
+        written += _uart->write(payload[i]);
         crc = crc8_update(crc, payload[i]);
     }
     
-    _uart->write(crc);
+    written += _uart->write(crc);
+
+    const uint8_t expected = FRAME_OVERHEAD + len;
+    if (written != expected) {
+        static uint32_t last_short_write_log_ms = 0;
+        const uint32_t now = AP_HAL::millis();
+        if (now - last_short_write_log_ms > 2000) {
+            GCS_SEND_TEXT(MAV_SEVERITY_WARNING, "[WuK-TX] short write %u/%u", 
+                          (unsigned int)written,
+                          (unsigned int)expected);
+            last_short_write_log_ms = now;
+        }
+    }
 }
 
 // Parameter definitions
@@ -219,13 +269,13 @@ const AP_Param::GroupInfo WuK_Comms::var_info[] = {
     // @DisplayName: UART Port
     // @Description: UART port number (0=Serial0, 1=Serial1, etc.) - Not used if using SerialManager
     // @User: Advanced
-    AP_GROUPINFO("PORT", 1, WuK_Comms, _port, 0),
+    AP_GROUPINFO("PORT", 1, WuK_Comms, _port, 4),
 
     // @Param: BAUD
     // @DisplayName: UART Baudrate
     // @Description: UART baudrate
     // @User: Advanced
-    AP_GROUPINFO("BAUD", 2, WuK_Comms, _baud, 57600),
+    AP_GROUPINFO("BAUD", 2, WuK_Comms, _baud, 9600),
 
     AP_GROUPEND
 };

@@ -40,7 +40,6 @@ public:
     float pitch_min, pitch_max;
     //
     Vector3f thrust_vector;
-    Vector3f current_thrust_vector;
 
     // support for servo slew rate
     enum {SERVO_NORMAL, SERVO_RETRACT} servo_type = SERVO_NORMAL;
@@ -62,7 +61,6 @@ public:
         thrust_vector.x = 0;
         thrust_vector.y = 0;
         thrust_vector.z = -1;
-        current_thrust_vector = thrust_vector;
     }
 
     /*
@@ -89,7 +87,6 @@ public:
         thrust_vector.x = 0;
         thrust_vector.y = 0;
         thrust_vector.z = -1;
-        current_thrust_vector = thrust_vector;
     }
 
     void calculate_forces(const struct sitl_input &input,
